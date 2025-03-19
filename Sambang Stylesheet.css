@@ -8,12 +8,13 @@
 }
 
 header {
+    position: fixed;
+    top: 0;
+    left: 33%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     background-color: mintcream;
-    padding: 10px;
-    /* box-shadow: 0 2px 5px var(--cambridge-blue); */
 }
 
 h1 {
@@ -23,48 +24,93 @@ h1 {
 
 body {
     background-color: mintcream; /* Replace #f0f0f0 with your desired color */
+    height: 100%;
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
 }
 
 /* Styling for the logo and about link */
+
 .logo {
     text-decoration: none;  /* Removes underline */
     color: var(--cambridge-blue);           /* Text color */
     font-size: 36px;        /* Same size for both */
     font-weight: bold;
-    padding-left: 20px;
+    
 }
 
+.arrow-icon {
+  position: fixed;
+  bottom: 20px;   /* Position the arrow at the bottom */
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: pointer;
+  z-index: 1000;  /* Ensure it's on top of other content */
+}
+
+.arrow {
+    width: 30px;
+    height: 30px;
+    border-left: 3px solid black;
+    border-bottom: 3px solid black;
+    transform: rotate(45deg);
+    transition: transform 0.5s cubic-bezier(.25, 1.7, .35, .8); /* Smooth animation */
+    rotate: -90deg;
+}
+
+.arrow-icon:hover .arrow {
+    transform: rotate(45deg) translateY(5px);
+}
+
+
+/*
 .about-link {
-    text-decoration: none;  /* Removes underline */
-    color: var(--cambridge-blue);           /* Text color */
-    font-size: 36px;        /* Same size for both */
+    text-decoration: none;
+    color: var(--cambridge-blue);
+    font-size: 36px;
     font-weight: bold;
-    /* margin-left: auto; */
+    /* margin-left: auto;
     position: absolute;
     right: 10px;
     padding-right: 20px;
 }
-
+*/
 .con_photos {
     display: flex;
-    overflow-y: scroll;
-    width: 100%;
-    height: 350px;
-    /* gap: 60px; */
+    flex-wrap: nowrap;
+    justify-content: center;                /* Centers the items horizontally */
+    align-items: center;                    /* Centers the items vertically */
+    gap: 30px;
+    width: max-content;
+    height: 70vh;
+    overflow-x: auto;
     padding: 20px;
+    margin-top: 40px;
+    position: relative;
+    white-space: nowrap;
+}
+
+.photo_div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20%; /* Makes each image container big */
+    height: 80%; /* Matches height with the container */
+    scroll-snap-align: center; /* Ensures smooth snapping */
 }
 
 .photo_con {
-    /* padding: 0px 20px; */
-    width:  300px;
-    height: 300px;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     cursor: pointer;
     z-index: 1;
+    transition: transform 0.3s ease;
+    scroll-snap-align: center;
+    flex-shrink: 0; /* Prevent images from shrinking and overlapping */
 }
+
 
 .photo_con:hover {
     transform: scale(1.1);
@@ -80,18 +126,6 @@ body {
     align-items: center;
 }
 
-.photo_div {
-    width: 300px;
-    height: 300px;
-    position: relative;
-    /* overflow: hidden; */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0px;
-    margin: 0 20px;
-    background-color: var(--wenge);
-}
 
 .p_photo {
     position: absolute;
