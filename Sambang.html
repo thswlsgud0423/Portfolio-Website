@@ -4,40 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sambang</title>
-    <link rel="stylesheet" href="Sambang Stylesheet.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --wenge: #54494b;
+            --mint-cream: #f1f7ed;
+            --cambridge-blue: #91c7b1;
+            --rose-red: #b33951;
+            --flax: #e3d081;
+        }
+    </style>
 </head>
 
-<body>
+<body class="bg-[var(--mint-cream)] text-gray-900 font-sans">
 
-<header>
-    <h1>
-        <a class="logo">Welcome to sambang</a>
+    <!-- Header -->
+    <header class="fixed top-0 left-1/2 transform -translate-x-1/2 flex justify-center items-center w-full bg-[var(--mint-cream)] p-4 shadow-md">
+        <h1>
+            <a class="text-[var(--cambridge-blue)] text-3xl font-bold">Welcome to Sambang</a>
+        </h1>
+    </header>
 
-    </h1>
-</header>
+    <!-- Main Content -->
+    <main class="pt-20 flex flex-col items-center">
 
-<main>
-    <div class="arrow-icon" onclick="window.location.href='about.html';">
-        <div class="arrow"></div>
-    </div>
+        <!-- Arrow Icon -->
+        <div class="arrow-icon fixed bottom-5 left-1/2 transform -translate-x-1/2 cursor-pointer z-50" onclick="window.location.href='about.html';">
+            <div class="arrow w-8 h-8 border-l-4 border-b-4 border-black rotate-[-45deg] transition-transform duration-500 hover:translate-y-2"></div>
+        </div>
 
-    <div class="con_photos">
-        <div class="photo_div"><p class="p_photo">TRUE LOVE</p><img src="images/Air Fryer.jpg"     class="photo_con"></div>
-        <div class="photo_div"><p class="p_photo">TRUE LOVE</p><img src="images/Dolon.jpg"         class="photo_con"></div>
-        <div class="photo_div"><p class="p_photo">TRUE LOVE</p><img src="images/going mad.jpg"     class="photo_con"></div>
-        <div class="photo_div"><p class="p_photo">TRUE LOVE</p><img src="images/Jinbang.jpg"       class="photo_con"></div>
-        <div class="photo_div"><p class="p_photo">TRUE LOVE</p><img src="images/Air Fryer.jpg"     class="photo_con"></div>
-        <div class="photo_div"><p class="p_photo">TRUE LOVE</p><img src="images/Dolon.jpg"         class="photo_con"></div>
-        <div class="photo_div"><p class="p_photo">TRUE LOVE</p><img src="images/going mad.jpg"     class="photo_con"></div>
-        <div class="photo_div"><p class="p_photo">TRUE LOVE</p><img src="images/Jinbang.jpg"       class="photo_con"></div>
-    </div>
+        <!-- Image Gallery -->
+        <div class="con_photos flex overflow-x-auto space-x-6 p-4 mt-10 w-full max-w-screen-lg h-[70vh] items-center snap-x snap-mandatory">
+            <div class="photo_div flex flex-col justify-center items-center w-auto h-auto snap-center flex-shrink-0">
+                <p class="text-[var(--mint-cream)] font-bold">TRUE LOVE</p>
+                <img src="images/Air Fryer.jpg" class="photo_con w-[250px] h-auto max-h-[70vh] object-cover cursor-pointer transition-transform duration-300 hover:scale-110 hover:opacity-50" alt="TRUE LOVE">
+            </div>
+            <div class="photo_div flex flex-col justify-center items-center w-auto h-auto snap-center flex-shrink-0">
+                <p class="text-[var(--mint-cream)] font-bold">TRUE LOVE</p>
+                <img src="images/Jinbang.jpg" class="photo_con w-[250px] h-auto max-h-[70vh] object-cover cursor-pointer transition-transform duration-300 hover:scale-110 hover:opacity-50" alt="TRUE LOVE">
+            </div>
+            <div class="photo_div flex flex-col justify-center items-center w-auto h-auto snap-center flex-shrink-0">
+                <p class="text-[var(--mint-cream)] font-bold">TRUE LOVE</p>
+                <img src="images/going mad.jpg" class="photo_con w-[250px] h-auto max-h-[70vh] object-cover cursor-pointer transition-transform duration-300 hover:scale-110 hover:opacity-50" alt="TRUE LOVE">
+            </div>
+            <div class="photo_div flex flex-col justify-center items-center w-auto h-auto snap-center flex-shrink-0">
+                <p class="text-[var(--mint-cream)] font-bold">TRUE LOVE</p>
+                <img src="images/Jinbang.jpg" class="photo_con w-[250px] h-auto max-h-[70vh] object-cover cursor-pointer transition-transform duration-300 hover:scale-110 hover:opacity-50" alt="TRUE LOVE">
+            </div>
+        </div>
 
-    
-</main>
+    </main>
+
+    <footer class="mt-10 p-4 text-center">
+        <p class="text-gray-600">© 2024 Sambang. All rights reserved.</p>
+    </footer>
 
 </body>
-
-<footer>
-
-</footer>
 </html>

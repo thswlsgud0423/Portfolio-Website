@@ -64,23 +64,11 @@ body {
 }
 
 
-/*
-.about-link {
-    text-decoration: none;
-    color: var(--cambridge-blue);
-    font-size: 36px;
-    font-weight: bold;
-    /* margin-left: auto;
-    position: absolute;
-    right: 10px;
-    padding-right: 20px;
-}
-*/
 .con_photos {
     display: flex;
     flex-wrap: nowrap;
-    justify-content: center;                /* Centers the items horizontally */
-    align-items: center;                    /* Centers the items vertically */
+    justify-content: center; 
+    align-items: center;
     gap: 30px;
     width: max-content;
     height: 70vh;
@@ -95,9 +83,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 20%; /* Makes each image container big */
-    height: 80%; /* Matches height with the container */
-    scroll-snap-align: center; /* Ensures smooth snapping */
+    width: 20%;
+    height: 80%;
+    scroll-snap-align: center; 
 }
 
 .photo_con {
