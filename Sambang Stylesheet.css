@@ -103,9 +103,54 @@
     .photo_con:hover {
         transform: scale(1.1);
         opacity: 0.5;
-        transition:  0.25s;
+        transition:  0.75s;
     }
     
+    
+    .photo_con::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0); /* Transparent by default */
+        backdrop-filter: blur(0px);
+        transition: 0.25s;
+        z-index: 1;
+    }
+    
+    .photo_con:hover::after {
+        background: rgba(0, 0, 0, 0.5); /* Darken on hover */
+        backdrop-filter: blur(5px); /* Apply blur on hover */
+    }
+    
+    .photo_con img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .hover-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 1.5rem;
+        font-weight: bold;
+        opacity: 0;
+        transition: 0.25s;
+        z-index: 2;
+    }
+    
+    .photo_con:hover .hover-text {
+        opacity: 1;
+    }
+    
+    
+
     .con_text {
         display: flex;
         flex-direction: column;
@@ -120,7 +165,4 @@
         color: mintcream;
     }
 
-    .footer-text {
-        color: mintcream;
-    }
 

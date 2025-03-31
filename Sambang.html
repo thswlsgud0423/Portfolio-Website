@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sambang</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="Sambang script.js"></script>
     <style>
         :root {
             --wenge: #54494b;
@@ -52,24 +53,52 @@
         </div>
 
         <!-- Image Gallery -->
+        <!-- Image Gallery -->
         <div class="con_photos flex overflow-x-auto space-x-6 p-4 mt-10 w-full max-w-screen-lg h-[70vh] items-center snap-x snap-mandatory">
-            <div class="photo_div flex flex-col justify-center items-center w-auto h-auto snap-center flex-shrink-0">
-                <p class="text-[var(--mint-cream)] font-bold">TRUE LOVE</p>
-                <img src="images/Air Fryer.jpg" class="photo_con w-[250px] h-auto max-h-[70vh] object-cover cursor-pointer transition-transform duration-300 hover:scale-110 hover:opacity-50" alt="TRUE LOVE">
+            <div class="photo_div flex flex-col justify-center items-center w-auto h-auto snap-center flex-shrink-0 relative group">
+                <div class="relative w-[250px] h-auto max-h-[70vh] cursor-pointer rounded-md overflow-hidden transition duration-300 group-hover:scale-110">
+                    <div class="w-full h-full transition duration-300 group-hover:blur-sm">
+                        <img src="images/Air Fryer.jpg" class="w-full h-full object-cover" alt="TRUE LOVE">
+                    </div>
+                    <p class="absolute inset-0 flex items-center justify-center text-[var(--cambridge-blue)] text-xl font-bold opacity-0 transition duration-300 group-hover:opacity-100">
+                        Air Fryers
+                    </p>
+                </div>
             </div>
-            <div class="photo_div flex flex-col justify-center items-center w-auto h-auto snap-center flex-shrink-0">
-                <p class="text-[var(--mint-cream)] font-bold">TRUE LOVE</p>
-                <img src="images/Jinbang.jpg" class="photo_con w-[250px] h-auto max-h-[70vh] object-cover cursor-pointer transition-transform duration-300 hover:scale-110 hover:opacity-50" alt="TRUE LOVE">
+            <div class="photo_div flex flex-col justify-center items-center w-auto h-auto snap-center flex-shrink-0 relative group">
+                <div class="relative w-[250px] h-auto max-h-[70vh] cursor-pointer rounded-md overflow-hidden transition duration-300 group-hover:scale-110">
+                    <div class="w-full h-full transition duration-300 group-hover:blur-sm">
+                        <img src="images/Jinbang.jpg" class="w-full h-full object-cover" alt="TRUE LOVE">
+                    </div>
+                    <p class="absolute inset-0 flex items-center justify-center text-[var(--cambridge-blue)] text-xl font-bold opacity-0 transition duration-300 group-hover:opacity-100">
+                        Jinbang
+                    </p>
+                </div>
             </div>
-            <div class="photo_div flex flex-col justify-center items-center w-auto h-auto snap-center flex-shrink-0">
-                <p class="text-[var(--mint-cream)] font-bold">TRUE LOVE</p>
-                <img src="images/going mad.jpg" class="photo_con w-[250px] h-auto max-h-[70vh] object-cover cursor-pointer transition-transform duration-300 hover:scale-110 hover:opacity-50" alt="TRUE LOVE">
+            <div class="photo_div flex flex-col justify-center items-center w-auto h-auto snap-center flex-shrink-0 relative group">
+                <div class="relative w-[250px] h-auto max-h-[70vh] cursor-pointer rounded-md overflow-hidden transition duration-300 group-hover:scale-110">
+                    <div class="w-full h-full transition duration-300 group-hover:blur-sm">
+                        <img src="images/going mad.jpg" class="w-full h-full object-cover" alt="TRUE LOVE">
+                    </div>
+                    <p class="absolute inset-0 flex items-center justify-center text-[var(--cambridge-blue)] text-xl font-bold opacity-0 transition duration-300 group-hover:opacity-100">
+                        Homelander
+                    </p>
+                </div>
             </div>
-            <div class="photo_div flex flex-col justify-center items-center w-auto h-auto snap-center flex-shrink-0">
-                <p class="text-[var(--mint-cream)] font-bold">TRUE LOVE</p>
-                <img src="images/Jinbang.jpg" class="photo_con w-[250px] h-auto max-h-[70vh] object-cover cursor-pointer transition-transform duration-300 hover:scale-110 hover:opacity-50" alt="TRUE LOVE">
+            <div class="photo_div flex flex-col justify-center items-center w-auto h-auto snap-center flex-shrink-0 relative group">
+                <div class="relative w-[250px] h-auto max-h-[70vh] cursor-pointer rounded-md overflow-hidden transition duration-300 group-hover:scale-110">
+                    <div class="w-full h-full transition duration-300 group-hover:blur-sm">
+                        <img src="images/Jinbang.jpg" class="w-full h-full object-cover" alt="TRUE LOVE">
+                    </div>
+                    <p class="absolute inset-0 flex items-center justify-center text-[var(--cambridge-blue)] text-xl font-bold opacity-0 transition duration-300 group-hover:opacity-100">
+                        Jinbang Again
+                    </p>
+                </div>
             </div>
         </div>
+
+
+
 
     </main>
 
