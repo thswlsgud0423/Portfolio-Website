@@ -4,39 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About - Sambang</title>
-    <link rel="stylesheet" href="Sambang About Stylesheet.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --wenge: #54494bff;
+            --mint-cream: #f1f7edff;
+            --cambridge-blue: #91c7b1ff;
+            --rose-red: #b33951ff;
+            --flax: #e3d081ff;
+        }
+    </style>
 </head>
-<body>
+<body class="bg-[var(--mint-cream)] bg-[url('images/Waves.svg')] bg-fill bg-no-repeat">
 
     <!-- Header -->
-    <header>
-        <a href="Sambang.html" class="logo">sambang</a>
-        <!-- <a href="about.html" class="about-link">About</a> -->
+    <header class="flex justify-between items-center bg-[var(--mint-cream)] p-4">
+        <a href="Sambang.html" class="logo text-[var(--cambridge-blue)] text-2xl font-bold">sambang</a>
     </header>
 
-    <div class="con_about_title">
-            <h1>About Us</h1>
-            <!-- <p>This website was created by Samuel Heinrich and Jinhyung Son.</p> -->
+    <div class="con_about_title text-center my-8">
+        <h1 class="text-4xl font-bold text-[var(--cambridge-blue)]">About Us</h1>
     </div>
 
-    <div class="con_about">
-        <div class="info_card">
-            <img src="images/sam_photo.jpg" alt="photo of Sam">
-
-            <div class="about_text">
-                <h2>Samuel Heinrich</h2>
-                <p>Samuel is a bachelors student at JKU studying Artificial Intelligence. He is a photographer, videographer, voiceover artist, and graphic designer. He is passionate about creating media that is both visually appealing and informative. He is also a fan of hiking, camping, and exploring the great outdoors.</p>
+    <div class="con_about flex flex-wrap justify-center gap-8 p-4">
+        <!-- Info Card: Samuel Heinrich -->
+        <div class="info_card flex flex-col md:flex-row bg-[var(--cambridge-blue)] rounded-lg shadow-lg overflow-hidden w-full sm:w-5/6 lg:w-3/4 xl:w-2/3 text-left">
+            <div class="w-full md:w-1/3 overflow-hidden">
+                <img src="images/sam_photo.jpg" alt="photo of Sam" class="object-cover w-full h-full aspect-[3/4] md:aspect-auto">
+            </div>
+            <div class="about_text text-[var(--wenge)] font-semibold p-6 flex-1 flex flex-col justify-center">
+                <h2 class="text-2xl font-semibold text-[var(--wenge)]">Samuel Heinrich</h2>
+                <p class="mt-2">Samuel is a bachelors student at JKU studying Artificial Intelligence. He is a photographer, videographer, voiceover artist, and graphic designer. He is passionate about creating media that is both visually appealing and informative. He is also a fan of hiking, camping, and exploring the great outdoors.</p>
             </div>
         </div>
 
-        <div class="info_card">
-            <img src="images/jinhyung_photo.jpg" alt="photo of Jinhyung">
-            <div class="about_text">
-                <h2>Jinhyung Son</h2>
-                <p>Jinhyung is a bachelors student at JKU studying Artificial Intelligence. He is a programmer, keyboard-builder, chef, and a Willhaben expert. He is passionate about joining the South Korean military to serve his country. He is also a fan of ramen, walking, League of Legends, and Overwatch.</p>
+        <!-- Info Card: Jinhyung Son -->
+        <div class="info_card flex flex-col md:flex-row bg-[var(--cambridge-blue)] rounded-lg shadow-lg overflow-hidden w-full sm:w-5/6 lg:w-3/4 xl:w-2/3 text-left">
+            <div class="w-full md:w-1/3 overflow-hidden">
+                <img src="images/jinhyung_photo.jpg" alt="photo of Jinhyung" class="object-cover w-full h-full aspect-[3/4] md:aspect-auto">
+            </div>
+            <div class="about_text text-[var(--wenge)] font-semibold p-6 flex-1 flex flex-col justify-center">
+                <h2 class="text-2xl font-semibold text-[var(--wenge)]">Jinhyung Son</h2>
+                <p class="mt-2">Jinhyung is a bachelors student at JKU studying Artificial Intelligence. He is a programmer, keyboard-builder, chef, and a Willhaben expert. He is passionate about joining the South Korean military to serve his country. He is also a fan of ramen, walking, League of Legends, and Overwatch.</p>
             </div>
         </div>
     </div>
-
 </body>
 </html>
