@@ -16,24 +16,66 @@
         </h1>
     </header>
 
-<main>
-    <div class="arrow-icon" onclick="window.location.href='about.html';">
-        <div class="arrow"></div>
-    </div>
+    <!-- Main Content -->
+    <main class="pt-20 flex flex-col items-center">
 
-    <div class="con_photos">
-        <div class="photo_div"><p class="p_photo">TRUE LOVE</p><img src="images/Air Fryer.jpg"     class="photo_con"></div>
-        <div class="photo_div"><p class="p_photo">TRUE LOVE</p><img src="images/Dolon.jpg"         class="photo_con"></div>
-        <div class="photo_div"><p class="p_photo">TRUE LOVE</p><img src="images/going mad.jpg"     class="photo_con"></div>
-        <div class="photo_div"><p class="p_photo">TRUE LOVE</p><img src="images/Jinbang.jpg"       class="photo_con"></div>
-        <div class="photo_div"><p class="p_photo">TRUE LOVE</p><img src="images/Air Fryer.jpg"     class="photo_con"></div>
-        <div class="photo_div"><p class="p_photo">TRUE LOVE</p><img src="images/Dolon.jpg"         class="photo_con"></div>
-        <div class="photo_div"><p class="p_photo">TRUE LOVE</p><img src="images/going mad.jpg"     class="photo_con"></div>
-        <div class="photo_div"><p class="p_photo">TRUE LOVE</p><img src="images/Jinbang.jpg"       class="photo_con"></div>
-    </div>
+        <!-- Arrow Icon -->
+        <div class="arrow-icon fixed bottom-5 left-1/2 transform -translate-x-1/2 cursor-pointer z-50" onclick="window.location.href='about.html';">
+            <div class="arrow w-8 h-8 border-l-4 border-b-4 border-[var(--cambridge-blue)] rotate-[-45deg] transition-transform duration-500 hover:translate-y-2"></div>
+        </div>
 
-    
-</main>
+        <!-- Image Gallery -->
+        <div class="con_photos flex overflow-x-auto space-x-6 p-4 mt-10 w-full max-w-screen-lg h-[70vh] items-center snap-x snap-mandatory">
+            <div class="photo_div flex flex-col justify-center items-center w-auto h-auto snap-center flex-shrink-0 relative group">
+                <div class="relative w-[250px] h-auto max-h-[70vh] cursor-pointer rounded-md overflow-hidden transition duration-300 group-hover:scale-110">
+                    <div class="w-full h-full transition duration-300 group-hover:blur-xs group-hover:brightness-50">
+                        <img src="images/Air Fryer.jpg" class="w-full h-full object-cover" alt="TRUE LOVE">
+                    </div>
+                    <p class="absolute inset-0 flex items-center justify-center text-[var(--mint-cream)] text-xl font-bold opacity-0 transition duration-300 group-hover:opacity-100">
+                        Air Fryers
+                    </p>
+                </div>
+            </div>
+            <div class="photo_div flex flex-col justify-center items-center w-auto h-auto snap-center flex-shrink-0 relative group">
+                <div class="relative w-[250px] h-auto max-h-[70vh] cursor-pointer rounded-md overflow-hidden transition duration-300 group-hover:scale-110">
+                    <div class="w-full h-full transition duration-300 group-hover:blur-xs group-hover:brightness-50">
+                        <img src="images/Jinbang.jpg" class="w-full h-full object-cover" alt="TRUE LOVE">
+                    </div>
+                    <p class="absolute inset-0 flex items-center justify-center text-[var(--mint-cream)] text-xl font-bold opacity-0 transition duration-300 group-hover:opacity-100">
+                        Jinbang
+                    </p>
+                </div>
+            </div>
+            <div class="photo_div flex flex-col justify-center items-center w-auto h-auto snap-center flex-shrink-0 relative group">
+                <div class="relative w-[250px] h-auto max-h-[70vh] cursor-pointer rounded-md overflow-hidden transition duration-300 group-hover:scale-110">
+                    <div class="w-full h-full transition duration-300 group-hover:blur-xs group-hover:brightness-50">
+                        <img src="images/going mad.jpg" class="w-full h-full object-cover" alt="TRUE LOVE">
+                    </div>
+                    <p class="absolute inset-0 flex items-center justify-center text-[var(--mint-cream)] text-xl font-bold opacity-0 duration-300 group-hover:opacity-100">
+                        Homelander
+                    </p>
+                </div>
+            </div>
+            <div class="photo_div flex flex-col justify-center items-center w-auto h-auto snap-center flex-shrink-0 relative group">
+                <div class="relative w-[250px] h-auto max-h-[70vh] cursor-pointer rounded-md overflow-hidden transition duration-300 group-hover:scale-110">
+                    <div class="w-full h-full transition duration-300 group-hover:blur-xs group-hover:brightness-50">
+                        <img src="images/Jinbang.jpg" class="w-full h-full object-cover" alt="TRUE LOVE">
+                    </div>
+                    <p class="absolute inset-0 flex items-center justify-center text-[var(--mint-cream)] text-xl font-bold opacity-0 transition duration-300 group-hover:opacity-100">
+                        Jinbang Again
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </main>
+
+    <footer class="mt-10 p-4 text-center">
+        <p class="text-[var(--cambridge-blue)]">© 2025 Sambang. All rights reserved.</p>
+    </footer>
 
 </body>
 </html>
