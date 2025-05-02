@@ -39,11 +39,14 @@
              transform: translateY(0);
         }
          /* Add animation delay helper classes */
-        .delay-100 { animation-delay: 0.1s; }
-        .delay-200 { animation-delay: 0.2s; }
-        .delay-300 { animation-delay: 0.3s; }
-        .delay-400 { animation-delay: 0.4s; }
-        .delay-500 { animation-delay: 0.5s; }
+        .delay-100 { transition-delay: 0.1s; }
+        .delay-200 { transition-delay: 0.2s; }
+        .delay-300 { transition-delay: 0.3s; }
+        .delay-400 { transition-delay: 0.4s; }
+        .delay-500 { transition-delay: 0.5s; }
+        .delay-600 { transition-delay: 0.6s; }
+        .delay-700 { transition-delay: 0.7s; }
+        .delay-800 { transition-delay: 0.8s; }
 
         /* Style for tech stack badges in project cards */
         .tech-badge {
@@ -55,6 +58,44 @@
             font-weight: 500; /* font-medium */
             white-space: nowrap;
         }
+
+        /* --- Styles for Drag-to-Scroll --- */
+        #project-scroll-container {
+            cursor: grab; /* Indicate it's draggable */
+            user-select: none; /* Prevent text selection during drag */
+            -webkit-user-drag: none; /* Prevent browser default image drag */
+            scroll-behavior: auto; /* Override html smooth scroll for instant drag */
+        }
+        #project-scroll-container.active-drag {
+            cursor: grabbing; /* Indicate active dragging */
+        }
+        /* Ensure content within the container doesn't interfere */
+        #project-scroll-container > * {
+            user-select: none;
+             -webkit-user-drag: none;
+             pointer-events: none; /* Prevent interaction during drag - might block links! Re-enable on mouseup */
+        }
+        /* Re-enable pointer events for links specifically */
+        #project-scroll-container a,
+        #project-scroll-container button {
+            pointer-events: auto; /* Allow links/buttons to be clicked */
+        }
+        /* Adjust scrollbar appearance (optional) */
+        #project-scroll-container::-webkit-scrollbar {
+            height: 8px; /* Adjust height */
+        }
+        #project-scroll-container::-webkit-scrollbar-track {
+            background: #f1f5f9; /* bg-slate-100 */
+            border-radius: 4px;
+        }
+        #project-scroll-container::-webkit-scrollbar-thumb {
+            background: #94a3b8; /* bg-slate-400 */
+            border-radius: 4px;
+        }
+        #project-scroll-container::-webkit-scrollbar-thumb:hover {
+            background: #64748b; /* bg-slate-500 */
+        }
+
 
     </style>
 </head>
@@ -73,7 +114,7 @@
             </div>
 
             <div class="md:hidden">
-                <button id="mobile-menu-button" class="text-gray-600 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" aria-label="Open main menu">
+                <button id="mobile-menu-button" class="text-gray-600 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" aria-label="Open main menu" aria-expanded="false">
                     <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
                     </svg>
@@ -95,107 +136,107 @@
     <main>
 
         <section id="home" class="container mx-auto px-6 py-20 md:py-32 flex flex-col md:flex-row items-center animate-on-scroll">
-            <div class="md:w-1/2 lg:w-3/5 text-center md:text-left mb-12 md:mb-0">
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 leading-tight animate-on-scroll delay-100">
-                    Hi, I'm <span class="text-blue-600">Your Name</span>
-                </h1>
-                <p class="text-xl md:text-2xl text-gray-700 mb-6 animate-on-scroll delay-200">
-                    Software Engineer | Full-Stack Developer based in [Your Location].
-                </p>
-                <p class="text-lg text-gray-600 mb-8 max-w-xl mx-auto md:mx-0 animate-on-scroll delay-300">
-                    I build robust and scalable web applications, focusing on clean code and efficient solutions. Let's turn your ideas into code.
-                </p>
-                <div class="flex justify-center md:justify-start space-x-4 animate-on-scroll delay-400">
-                    <a href="#projects" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-full font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-1">
-                        See My Projects
-                    </a>
-                    <a href="#contact" class="bg-white hover:bg-gray-100 text-gray-700 px-6 py-3 rounded-full font-semibold shadow-md hover:shadow-lg border border-gray-300 transform hover:-translate-y-1">
-                        Get In Touch
-                    </a>
-                </div>
-                 <div class="mt-10 flex justify-center md:justify-start space-x-6 animate-on-scroll delay-500">
-                     <a href="#" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-blue-600" aria-label="GitHub Profile">
-                         <i class="fab fa-github fa-2x"></i>
+             <div class="md:w-1/2 lg:w-3/5 text-center md:text-left mb-12 md:mb-0">
+                 <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 leading-tight animate-on-scroll delay-100 is-visible">
+                     Hi, I'm <span class="text-blue-600">Your Name</span>
+                 </h1>
+                 <p class="text-xl md:text-2xl text-gray-700 mb-6 animate-on-scroll delay-200 is-visible">
+                     Software Engineer | Full-Stack Developer based in [Your Location].
+                 </p>
+                 <p class="text-lg text-gray-600 mb-8 max-w-xl mx-auto md:mx-0 animate-on-scroll delay-300 is-visible">
+                     I build robust and scalable web applications, focusing on clean code and efficient solutions. Let's turn your ideas into code.
+                 </p>
+                 <div class="flex justify-center md:justify-start space-x-4 animate-on-scroll delay-400 is-visible">
+                     <a href="#projects" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-full font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-1">
+                         See My Projects
                      </a>
-                     <a href="#" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-blue-600" aria-label="LinkedIn Profile">
-                         <i class="fab fa-linkedin fa-2x"></i>
+                     <a href="#contact" class="bg-white hover:bg-gray-100 text-gray-700 px-6 py-3 rounded-full font-semibold shadow-md hover:shadow-lg border border-gray-300 transform hover:-translate-y-1">
+                         Get In Touch
                      </a>
-                     <a href="#" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-blue-600" aria-label="Twitter Profile (Optional)">
-                         <i class="fab fa-twitter fa-2x"></i>
-                     </a>
-                     </div>
-            </div>
-            <div class="md:w-1/2 lg:w-2/5 flex justify-center md:justify-end animate-on-scroll delay-200">
-                <img src="https://placehold.co/400x400/E2E8F0/A0AEC0?text=Your+Image" alt="Your Name - Profile Picture" class="rounded-full w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 object-cover shadow-lg border-4 border-white">
-            </div>
-        </section>
-
-        <section id="about" class="bg-white py-20 md:py-28">
-            <div class="container mx-auto px-6">
-                <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12 animate-on-scroll">About Me</h2>
-                <div class="flex flex-col md:flex-row items-start gap-12 lg:gap-16"> <div class="md:w-1/3 lg:w-1/4 flex justify-center animate-on-scroll delay-100">
-                         <img src="https://placehold.co/300x400/E2E8F0/A0AEC0?text=About+Me" alt="About Me Image" class="rounded-lg shadow-xl w-full max-w-xs object-cover">
-                    </div>
-                    <div class="md:w-2/3 lg:w-3/4 text-center md:text-left animate-on-scroll delay-200">
-                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Who I Am</h3>
-                        <p class="text-gray-600 leading-relaxed mb-6">
-                            Hello! I'm [Your Name], a passionate Software Engineer specializing in [Your Main Area, e.g., full-stack development, backend systems, frontend interfaces]. I enjoy tackling challenging problems and building applications that are both functional and user-friendly. My journey into programming began [Number] years ago, driven by a curiosity for how things work and a desire to create.
-                        </p>
-                        <p class="text-gray-600 leading-relaxed mb-8">
-                            I have experience working with [Mention specific technologies/frameworks like React, Node.js, Python, Django, etc.] and follow best practices like [Mention methodologies like Agile, TDD, etc.]. I'm always eager to learn new technologies and improve my craft. When I'm not coding, I enjoy [Your Hobbies/Interests].
-                        </p>
-                        <h4 class="text-xl font-semibold text-gray-800 mb-4">Technical Skills</h4>
-                        <div class="flex flex-wrap justify-center md:justify-start gap-3">
-                            <span class="bg-yellow-100 text-yellow-800 px-4 py-1 rounded-full text-sm font-medium">JavaScript (ES6+)</span>
-                            <span class="bg-blue-100 text-blue-800 px-4 py-1 rounded-full text-sm font-medium">React</span>
-                            <span class="bg-green-100 text-green-800 px-4 py-1 rounded-full text-sm font-medium">Node.js</span>
-                            <span class="bg-gray-200 text-gray-800 px-4 py-1 rounded-full text-sm font-medium">Express</span>
-                            <span class="bg-red-100 text-red-800 px-4 py-1 rounded-full text-sm font-medium">HTML5</span>
-                            <span class="bg-purple-100 text-purple-800 px-4 py-1 rounded-full text-sm font-medium">CSS3 / Sass</span>
-                            <span class="bg-indigo-100 text-indigo-800 px-4 py-1 rounded-full text-sm font-medium">Tailwind CSS</span>
-                            <span class="bg-pink-100 text-pink-800 px-4 py-1 rounded-full text-sm font-medium">Python</span>
-                            <span class="bg-teal-100 text-teal-800 px-4 py-1 rounded-full text-sm font-medium">SQL / PostgreSQL</span>
-                            <span class="bg-orange-100 text-orange-800 px-4 py-1 rounded-full text-sm font-medium">Git / GitHub</span>
-                            <span class="bg-cyan-100 text-cyan-800 px-4 py-1 rounded-full text-sm font-medium">Docker</span>
-                            <span class="bg-lime-100 text-lime-800 px-4 py-1 rounded-full text-sm font-medium">REST APIs</span>
-                            </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="projects" class="bg-gray-100 py-20 md:py-28">
-            <div class="container mx-auto px-6">
-                <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16 animate-on-scroll">Featured Projects</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col transform hover:scale-[1.03] transition duration-300 animate-on-scroll delay-100">
-                        <img src="https://placehold.co/600x400/3B82F6/FFFFFF?text=Project+App+1" alt="Project 1 Screenshot" class="w-full h-48 object-cover">
-                        <div class="p-6 flex flex-col flex-grow">
-                            <h3 class="text-xl font-semibold text-gray-800 mb-2">E-commerce Platform</h3>
-                            <p class="text-gray-600 text-sm mb-4 flex-grow">
-                                Developed a full-stack e-commerce application featuring product browsing, user authentication, shopping cart functionality, and order processing using Stripe integration.
-                            </p>
-                            <div class="mb-4 flex flex-wrap gap-2">
-                                <span class="tech-badge">React</span>
-                                <span class="tech-badge">Node.js</span>
-                                <span class="tech-badge">Express</span>
-                                <span class="tech-badge">MongoDB</span>
-                                <span class="tech-badge">Stripe API</span>
-                            </div>
-                            <div class="mt-auto flex justify-between items-center pt-4 border-t border-gray-200">
-                                <a href="#" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:text-blue-700 hover:underline font-medium text-sm inline-flex items-center">
-                                    View Live
-                                    <i class="fas fa-external-link-alt ml-1 text-xs"></i>
-                                </a>
-                                <a href="#" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-gray-800" aria-label="View Project 1 Code on GitHub">
-                                    <i class="fab fa-github fa-lg"></i> Code
-                                </a>
-                            </div>
+                 </div>
+                  <div class="mt-10 flex justify-center md:justify-start space-x-6 animate-on-scroll delay-500 is-visible">
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-blue-600" aria-label="GitHub Profile">
+                            <i class="fab fa-github fa-2x"></i>
+                        </a>
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-blue-600" aria-label="LinkedIn Profile">
+                            <i class="fab fa-linkedin fa-2x"></i>
+                        </a>
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-blue-600" aria-label="Twitter Profile (Optional)">
+                            <i class="fab fa-twitter fa-2x"></i>
+                        </a>
                         </div>
-                    </div>
+             </div>
+             <div class="md:w-1/2 lg:w-2/5 flex justify-center md:justify-end animate-on-scroll delay-200 is-visible">
+                 <img src="https://placehold.co/400x400/E2E8F0/A0AEC0?text=Your+Image" alt="Your Name - Profile Picture" class="rounded-full w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 object-cover shadow-lg border-4 border-white">
+             </div>
+         </section>
 
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col transform hover:scale-[1.03] transition duration-300 animate-on-scroll delay-200">
+         <section id="about" class="bg-white py-20 md:py-28">
+             <div class="container mx-auto px-6">
+                 <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12 animate-on-scroll">About Me</h2>
+                 <div class="flex flex-col md:flex-row items-start gap-12 lg:gap-16">
+                      <div class="md:w-1/3 lg:w-1/4 flex justify-center animate-on-scroll delay-100">
+                          <img src="https://placehold.co/300x400/E2E8F0/A0AEC0?text=About+Me" alt="About Me Image" class="rounded-lg shadow-xl w-full max-w-xs object-cover">
+                      </div>
+                      <div class="md:w-2/3 lg:w-3/4 text-center md:text-left animate-on-scroll delay-200">
+                          <h3 class="text-2xl font-semibold text-gray-800 mb-4">Who I Am</h3>
+                          <p class="text-gray-600 leading-relaxed mb-6">
+                              Hello! I'm [Your Name], a passionate Software Engineer specializing in [Your Main Area, e.g., full-stack development, backend systems, frontend interfaces]. I enjoy tackling challenging problems and building applications that are both functional and user-friendly. My journey into programming began [Number] years ago, driven by a curiosity for how things work and a desire to create.
+                          </p>
+                          <p class="text-gray-600 leading-relaxed mb-8">
+                              I have experience working with [Mention specific technologies/frameworks like React, Node.js, Python, Django, etc.] and follow best practices like [Mention methodologies like Agile, TDD, etc.]. I'm always eager to learn new technologies and improve my craft. When I'm not coding, I enjoy [Your Hobbies/Interests].
+                          </p>
+                          <h4 class="text-xl font-semibold text-gray-800 mb-4">Technical Skills</h4>
+                          <div class="flex flex-wrap justify-center md:justify-start gap-3">
+                              <span class="bg-yellow-100 text-yellow-800 px-4 py-1 rounded-full text-sm font-medium">JavaScript (ES6+)</span>
+                              <span class="bg-blue-100 text-blue-800 px-4 py-1 rounded-full text-sm font-medium">React</span>
+                              <span class="bg-green-100 text-green-800 px-4 py-1 rounded-full text-sm font-medium">Node.js</span>
+                              <span class="bg-gray-200 text-gray-800 px-4 py-1 rounded-full text-sm font-medium">Express</span>
+                              <span class="bg-red-100 text-red-800 px-4 py-1 rounded-full text-sm font-medium">HTML5</span>
+                              <span class="bg-purple-100 text-purple-800 px-4 py-1 rounded-full text-sm font-medium">CSS3 / Sass</span>
+                              <span class="bg-indigo-100 text-indigo-800 px-4 py-1 rounded-full text-sm font-medium">Tailwind CSS</span>
+                              <span class="bg-pink-100 text-pink-800 px-4 py-1 rounded-full text-sm font-medium">Python</span>
+                              <span class="bg-teal-100 text-teal-800 px-4 py-1 rounded-full text-sm font-medium">SQL / PostgreSQL</span>
+                              <span class="bg-orange-100 text-orange-800 px-4 py-1 rounded-full text-sm font-medium">Git / GitHub</span>
+                              <span class="bg-cyan-100 text-cyan-800 px-4 py-1 rounded-full text-sm font-medium">Docker</span>
+                              <span class="bg-lime-100 text-lime-800 px-4 py-1 rounded-full text-sm font-medium">REST APIs</span>
+                              </div>
+                      </div>
+                 </div>
+             </div>
+         </section>
+
+         <section id="projects" class="bg-gray-100 py-20 md:py-28 overflow-hidden"> <div class="container mx-auto px-6">
+                 <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16 animate-on-scroll">Featured Projects</h2>
+                 <div id="project-scroll-container" class="flex overflow-x-auto gap-x-8 pb-6 snap-x snap-mandatory">
+
+                     <div class="project-card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col w-80 md:w-96 flex-shrink-0 snap-center transform hover:scale-[1.03] transition duration-300 animate-on-scroll delay-100">
+                         <img src="https://placehold.co/600x400/3B82F6/FFFFFF?text=Project+App+1" alt="Project 1 Screenshot" class="w-full h-48 object-cover">
+                         <div class="p-6 flex flex-col flex-grow">
+                             <h3 class="text-xl font-semibold text-gray-800 mb-2">E-commerce Platform</h3>
+                             <p class="text-gray-600 text-sm mb-4 flex-grow">
+                                 Developed a full-stack e-commerce application featuring product Browse, user authentication, shopping cart functionality, and order processing using Stripe integration.
+                             </p>
+                             <div class="mb-4 flex flex-wrap gap-2">
+                                 <span class="tech-badge">React</span>
+                                 <span class="tech-badge">Node.js</span>
+                                 <span class="tech-badge">Express</span>
+                                 <span class="tech-badge">MongoDB</span>
+                                 <span class="tech-badge">Stripe API</span>
+                             </div>
+                             <div class="mt-auto flex justify-between items-center pt-4 border-t border-gray-200">
+                                 <a href="#" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:text-blue-700 hover:underline font-medium text-sm inline-flex items-center">
+                                     View Live
+                                     <i class="fas fa-external-link-alt ml-1 text-xs"></i>
+                                 </a>
+                                 <a href="#" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-gray-800 inline-flex items-center gap-1 text-sm" aria-label="View Project 1 Code on GitHub">
+                                     <i class="fab fa-github fa-lg"></i> Code
+                                 </a>
+                             </div>
+                         </div>
+                     </div>
+
+                     <div class="project-card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col w-80 md:w-96 flex-shrink-0 snap-center transform hover:scale-[1.03] transition duration-300 animate-on-scroll delay-200">
                         <img src="https://placehold.co/600x400/10B981/FFFFFF?text=Project+Tool+2" alt="Project 2 Screenshot" class="w-full h-48 object-cover">
                         <div class="p-6 flex flex-col flex-grow">
                             <h3 class="text-xl font-semibold text-gray-800 mb-2">Data Visualization Dashboard</h3>
@@ -214,14 +255,14 @@
                                     View Live
                                     <i class="fas fa-external-link-alt ml-1 text-xs"></i>
                                 </a>
-                                <a href="#" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-gray-800" aria-label="View Project 2 Code on GitHub">
+                                <a href="#" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-gray-800 inline-flex items-center gap-1 text-sm" aria-label="View Project 2 Code on GitHub">
                                     <i class="fab fa-github fa-lg"></i> Code
                                 </a>
                             </div>
                         </div>
                     </div>
 
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col transform hover:scale-[1.03] transition duration-300 animate-on-scroll delay-300">
+                     <div class="project-card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col w-80 md:w-96 flex-shrink-0 snap-center transform hover:scale-[1.03] transition duration-300 animate-on-scroll delay-300">
                         <img src="https://placehold.co/600x400/F59E0B/FFFFFF?text=Project+API+3" alt="Project 3 Screenshot" class="w-full h-48 object-cover">
                         <div class="p-6 flex flex-col flex-grow">
                             <h3 class="text-xl font-semibold text-gray-800 mb-2">Task Management API</h3>
@@ -236,146 +277,401 @@
                                 <span class="tech-badge">JWT</span>
                             </div>
                              <div class="mt-auto flex justify-between items-center pt-4 border-t border-gray-200">
-                                <span class="text-gray-400 text-sm italic">API Only</span> <a href="#" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-gray-800" aria-label="View Project 3 Code on GitHub">
+                                <span class="text-gray-400 text-sm italic">API Only</span>
+                                <a href="#" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-gray-800 inline-flex items-center gap-1 text-sm" aria-label="View Project 3 Code on GitHub">
                                     <i class="fab fa-github fa-lg"></i> Code
                                 </a>
                             </div>
                         </div>
                     </div>
 
+                     <div class="project-card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col w-80 md:w-96 flex-shrink-0 snap-center transform hover:scale-[1.03] transition duration-300 animate-on-scroll delay-400">
+                        <img src="https://placehold.co/600x400/EC4899/FFFFFF?text=Project+Blog+4" alt="Project 4 Screenshot" class="w-full h-48 object-cover">
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Personal Blog Platform</h3>
+                            <p class="text-gray-600 text-sm mb-4 flex-grow">
+                                Created a dynamic blog platform with a CMS for managing posts. Focused on SEO optimization and responsive design using Next.js and Tailwind CSS.
+                            </p>
+                            <div class="mb-4 flex flex-wrap gap-2">
+                                <span class="tech-badge">Next.js</span>
+                                <span class="tech-badge">React</span>
+                                <span class="tech-badge">Tailwind CSS</span>
+                                <span class="tech-badge">Markdown</span>
+                                <span class="tech-badge">Vercel</span>
+                            </div>
+                            <div class="mt-auto flex justify-between items-center pt-4 border-t border-gray-200">
+                                <a href="#" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:text-blue-700 hover:underline font-medium text-sm inline-flex items-center">
+                                    View Live
+                                    <i class="fas fa-external-link-alt ml-1 text-xs"></i>
+                                </a>
+                                <a href="#" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-gray-800 inline-flex items-center gap-1 text-sm" aria-label="View Project 4 Code on GitHub">
+                                    <i class="fab fa-github fa-lg"></i> Code
+                                </a>
+                            </div>
+                        </div>
                     </div>
-            </div>
-        </section>
 
-        <section id="contact" class="bg-white py-20 md:py-28">
-            <div class="container mx-auto px-6 max-w-4xl">
-                <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12 animate-on-scroll">Get In Touch</h2>
-                <p class="text-center text-gray-600 mb-10 max-w-2xl mx-auto animate-on-scroll delay-100">
-                    Interested in collaborating or have a question? I'd love to hear from you. Send me a message, and I'll get back to you as soon as possible!
-                </p>
+                     <div class="project-card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col w-80 md:w-96 flex-shrink-0 snap-center transform hover:scale-[1.03] transition duration-300 animate-on-scroll delay-500">
+                        <img src="https://placehold.co/600x400/8B5CF6/FFFFFF?text=Project+Util+5" alt="Project 5 Screenshot" class="w-full h-48 object-cover">
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">URL Shortener Service</h3>
+                            <p class="text-gray-600 text-sm mb-4 flex-grow">
+                                Developed a backend service to shorten URLs with tracking capabilities. Built using Go, Redis for caching, and PostgreSQL for persistence.
+                            </p>
+                            <div class="mb-4 flex flex-wrap gap-2">
+                                <span class="tech-badge">Go (Golang)</span>
+                                <span class="tech-badge">Redis</span>
+                                <span class="tech-badge">PostgreSQL</span>
+                                <span class="tech-badge">Docker</span>
+                                <span class="tech-badge">REST API</span>
+                            </div>
+                            <div class="mt-auto flex justify-between items-center pt-4 border-t border-gray-200">
+                                 <span class="text-gray-400 text-sm italic">Backend Service</span>
+                                <a href="#" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-gray-800 inline-flex items-center gap-1 text-sm" aria-label="View Project 5 Code on GitHub">
+                                    <i class="fab fa-github fa-lg"></i> Code
+                                </a>
+                            </div>
+                        </div>
+                    </div>
 
-                <div class="bg-gray-50 p-8 md:p-12 rounded-lg shadow-lg animate-on-scroll delay-200">
-                    <form action="#" method="POST"> <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                            <div>
-                                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
-                                <input type="text" name="name" id="name" required class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                     <div class="project-card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col w-80 md:w-96 flex-shrink-0 snap-center transform hover:scale-[1.03] transition duration-300 animate-on-scroll delay-600">
+                        <img src="https://placehold.co/600x400/F43F5E/FFFFFF?text=Project+Game+6" alt="Project 6 Screenshot" class="w-full h-48 object-cover">
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Simple Web Game</h3>
+                            <p class="text-gray-600 text-sm mb-4 flex-grow">
+                                Created a small browser-based game using vanilla JavaScript, HTML Canvas for rendering, and basic physics principles.
+                            </p>
+                            <div class="mb-4 flex flex-wrap gap-2">
+                                <span class="tech-badge">JavaScript</span>
+                                <span class="tech-badge">HTML Canvas</span>
+                                <span class="tech-badge">CSS3</span>
+                                <span class="tech-badge">Game Dev</span>
                             </div>
-                            <div>
-                                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                                <input type="email" name="email" id="email" required class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            <div class="mt-auto flex justify-between items-center pt-4 border-t border-gray-200">
+                                <a href="#" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:text-blue-700 hover:underline font-medium text-sm inline-flex items-center">
+                                    Play Game
+                                    <i class="fas fa-gamepad ml-1 text-xs"></i>
+                                </a>
+                                <a href="#" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-gray-800 inline-flex items-center gap-1 text-sm" aria-label="View Project 6 Code on GitHub">
+                                    <i class="fab fa-github fa-lg"></i> Code
+                                </a>
                             </div>
                         </div>
-                        <div class="mb-6">
-                            <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
-                            <input type="text" name="subject" id="subject" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                        </div>
-                        <div class="mb-6">
-                            <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
-                            <textarea name="message" id="message" rows="5" required class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"></textarea>
-                        </div>
-                        <div class="text-center">
-                            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-full font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-1 transition duration-300">
-                                Send Message
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </section>
+                    </div>
+                     </div> </div>
+         </section>
+
+         <section id="contact" class="bg-white py-20 md:py-28">
+             <div class="container mx-auto px-6 max-w-4xl">
+                 <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12 animate-on-scroll">Get In Touch</h2>
+                 <p class="text-center text-gray-600 mb-10 max-w-2xl mx-auto animate-on-scroll delay-100">
+                     Interested in collaborating or have a question? I'd love to hear from you. Send me a message, and I'll get back to you as soon as possible!
+                 </p>
+
+                 <div class="bg-gray-50 p-8 md:p-12 rounded-lg shadow-lg animate-on-scroll delay-200">
+                     <form action="#" method="POST"> <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                              <div>
+                                  <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                                  <input type="text" name="name" id="name" required class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                              </div>
+                              <div>
+                                  <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                  <input type="email" name="email" id="email" required class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                              </div>
+                         </div>
+                         <div class="mb-6">
+                             <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+                             <input type="text" name="subject" id="subject" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                         </div>
+                         <div class="mb-6">
+                             <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                             <textarea name="message" id="message" rows="5" required class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"></textarea>
+                         </div>
+                         <div class="text-center">
+                             <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-full font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-1 transition duration-300">
+                                 Send Message
+                             </button>
+                         </div>
+                     </form>
+                 </div>
+             </div>
+         </section>
 
     </main>
 
     <footer class="bg-gray-800 text-gray-400 py-8">
-        <div class="container mx-auto px-6 text-center">
-            <div class="mb-4 flex justify-center space-x-6">
-                 <a href="#" target="_blank" rel="noopener noreferrer" class="hover:text-white" aria-label="GitHub Profile">
-                     <i class="fab fa-github fa-lg"></i>
-                 </a>
-                 <a href="#" target="_blank" rel="noopener noreferrer" class="hover:text-white" aria-label="LinkedIn Profile">
-                     <i class="fab fa-linkedin fa-lg"></i>
-                 </a>
-                 <a href="#" target="_blank" rel="noopener noreferrer" class="hover:text-white" aria-label="Twitter Profile (Optional)">
-                     <i class="fab fa-twitter fa-lg"></i>
-                 </a>
-             </div>
-            <p class="text-sm">&copy; <span id="current-year"></span> Your Name. All rights reserved.</p>
-            <p class="text-xs mt-1">Built with <span class="text-red-500">&hearts;</span> and Tailwind CSS</p>
-        </div>
-    </footer>
+         <div class="container mx-auto px-6 text-center">
+             <div class="mb-4 flex justify-center space-x-6">
+                  <a href="#" target="_blank" rel="noopener noreferrer" class="hover:text-white" aria-label="GitHub Profile">
+                      <i class="fab fa-github fa-lg"></i>
+                  </a>
+                  <a href="#" target="_blank" rel="noopener noreferrer" class="hover:text-white" aria-label="LinkedIn Profile">
+                      <i class="fab fa-linkedin fa-lg"></i>
+                  </a>
+                  <a href="#" target="_blank" rel="noopener noreferrer" class="hover:text-white" aria-label="Twitter Profile (Optional)">
+                      <i class="fab fa-twitter fa-lg"></i>
+                  </a>
+                </div>
+             <p class="text-sm">&copy; <span id="current-year"></span> Your Name. All rights reserved.</p>
+             <p class="text-xs mt-1">Built with <span class="text-red-500">&hearts;</span> and Tailwind CSS</p>
+         </div>
+     </footer>
 
     <script>
-        // Mobile Menu Toggle
-        const menuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const navLinks = mobileMenu.querySelectorAll('a');
+         // Mobile Menu Toggle
+         const menuButton = document.getElementById('mobile-menu-button');
+         const mobileMenu = document.getElementById('mobile-menu');
+         const navLinksMobile = mobileMenu.querySelectorAll('a');
 
-        menuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-             const icon = menuButton.querySelector('svg path');
-             if (mobileMenu.classList.contains('hidden')) {
-                 icon.setAttribute('d', 'M4 6h16M4 12h16m-7 6h7');
-                 menuButton.setAttribute('aria-expanded', 'false');
-             } else {
-                 icon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
-                 menuButton.setAttribute('aria-expanded', 'true');
+         menuButton.addEventListener('click', () => {
+             mobileMenu.classList.toggle('hidden');
+              const icon = menuButton.querySelector('svg path');
+              const isExpanded = !mobileMenu.classList.contains('hidden');
+              menuButton.setAttribute('aria-expanded', isExpanded.toString());
+
+              if (isExpanded) {
+                  icon.setAttribute('d', 'M6 18L18 6M6 6l12 12'); // Close icon
+              } else {
+                  icon.setAttribute('d', 'M4 6h16M4 12h16m-7 6h7'); // Menu icon
+              }
+         });
+
+          // Close mobile menu when a link is clicked
+          navLinksMobile.forEach(link => {
+              link.addEventListener('click', () => {
+                  if (!mobileMenu.classList.contains('hidden')) {
+                      mobileMenu.classList.add('hidden');
+                      menuButton.querySelector('svg path').setAttribute('d', 'M4 6h16M4 12h16m-7 6h7');
+                      menuButton.setAttribute('aria-expanded', 'false');
+                  }
+              });
+           });
+
+         // Set Current Year in Footer
+         document.getElementById('current-year').textContent = new Date().getFullYear();
+
+         // Active Navigation Link Highlighting on Scroll
+         const sections = document.querySelectorAll('main section[id]');
+         const desktopNavLinks = document.querySelectorAll('header nav .hidden a[href^="#"]');
+         const mobileNavLinks = document.querySelectorAll('#mobile-menu a[href^="#"]');
+         const navLinksAll = [...desktopNavLinks, ...mobileNavLinks];
+
+         const navActivationOffset = - (document.querySelector('header')?.offsetHeight || 60) - 40;
+
+         const observerOptions = {
+             root: null,
+             rootMargin: `${navActivationOffset}px 0px 0px 0px`,
+             threshold: 0
+         };
+
+         const activateNavLink = (id) => {
+             const isBottom = (window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50;
+             let activeId = id;
+             if (isBottom) {
+                 const lastSection = sections[sections.length - 1];
+                 if (lastSection) activeId = lastSection.id;
              }
-        });
 
-         navLinks.forEach(link => {
-             link.addEventListener('click', () => {
-                 if (!mobileMenu.classList.contains('hidden')) {
-                     mobileMenu.classList.add('hidden');
-                     menuButton.querySelector('svg path').setAttribute('d', 'M4 6h16M4 12h16m-7 6h7');
-                     menuButton.setAttribute('aria-expanded', 'false');
+             navLinksAll.forEach(link => {
+                 link.classList.remove('nav-active');
+                 if (link.getAttribute('href') === `#${activeId}`) {
+                     link.classList.add('nav-active');
+                 }
+             });
+         };
+
+         const sectionObserver = new IntersectionObserver((entries, observer) => {
+             let topmostVisibleSectionId = null;
+             entries.forEach(entry => {
+                 if (entry.isIntersecting) {
+                      if (topmostVisibleSectionId === null || entry.target.offsetTop < document.getElementById(topmostVisibleSectionId).offsetTop) {
+                          topmostVisibleSectionId = entry.target.id;
+                      }
+                 }
+             });
+
+              if (topmostVisibleSectionId) {
+                  activateNavLink(topmostVisibleSectionId);
+              } else {
+                  if (window.scrollY < sections[0].offsetTop + navActivationOffset) {
+                       activateNavLink('home');
+                  }
+              }
+
+               const isBottomCheck = (window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50;
+               if (isBottomCheck) {
+                   activateNavLink(sections[sections.length - 1].id);
+               }
+
+         }, observerOptions);
+
+         sections.forEach(section => { sectionObserver.observe(section); });
+
+          // Scroll Animations
+          const animatedElements = document.querySelectorAll('.animate-on-scroll');
+          const animationObserverOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+          const animationObserver = new IntersectionObserver((entries, observer) => {
+              entries.forEach(entry => {
+                  if (entry.isIntersecting) {
+                      entry.target.classList.add('is-visible');
+                      observer.unobserve(entry.target);
+                  }
+              });
+          }, animationObserverOptions);
+          animatedElements.forEach(el => {
+              const rect = el.getBoundingClientRect();
+              if (
+                 rect.top >= 0 && rect.left >= 0 &&
+                 rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                 rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+              ) {
+                 el.classList.add('is-visible');
+              } else {
+                 animationObserver.observe(el);
+              }
+          });
+
+         // Ensure smooth scroll links work correctly
+         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+             anchor.addEventListener('click', function (e) {
+                 const href = this.getAttribute('href');
+                 if (href.length > 1 && href.startsWith('#')) {
+                     const targetElement = document.querySelector(href);
+                     if (targetElement) {
+                         e.preventDefault();
+                         targetElement.scrollIntoView({ behavior: 'smooth' });
+                     }
                  }
              });
          });
 
-        // Set Current Year in Footer
-        document.getElementById('current-year').textContent = new Date().getFullYear();
+        // --- Drag-to-Scroll for Projects (Smoother Version) ---
+        const slider = document.getElementById('project-scroll-container');
+        if (slider) {
+            let isDown = false;
+            let startX;
+            let initialScrollLeft; // Renamed from scrollLeft to avoid confusion
+            let targetScrollLeft;
+            let currentScrollLeft;
+            let velocity = 0;
+            let animationFrameId = null;
+            let hasDragged = false;
 
-        // Active Navigation Link Highlighting on Scroll
-        const sections = document.querySelectorAll('section[id]');
-        const desktopNavLinks = document.querySelectorAll('header nav .hidden a[href^="#"]');
-        const mobileNavLinks = document.querySelectorAll('#mobile-menu a[href^="#"]');
+            // --- Configuration ---
+            const dragMultiplier = 2.5; // How much the drag is amplified
+            const easingFactor = 0.15; // Smoothing factor (0-1, lower is smoother but more 'lag')
+            const stopThreshold = 0.5; // How close current and target need to be to stop animation
 
-        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.4 };
+            const startDrag = (e) => {
+                // Only activate drag for left mouse button and if not clicking scrollbar
+                if (e.button !== 0 || e.target === slider && e.offsetX > slider.clientWidth) return;
 
-        const activateNavLink = (id) => {
-            const setActive = (links) => {
-                 links.forEach(link => {
-                    link.classList.remove('nav-active');
-                    if (link.getAttribute('href') === `#${id}`) {
-                        link.classList.add('nav-active');
-                    }
-                });
-            }
-            setActive(desktopNavLinks);
-            setActive(mobileNavLinks);
-        };
+                isDown = true;
+                hasDragged = false;
+                slider.classList.add('active-drag');
+                startX = e.pageX - slider.offsetLeft;
+                initialScrollLeft = slider.scrollLeft;
+                currentScrollLeft = initialScrollLeft; // Start animation from current pos
+                targetScrollLeft = initialScrollLeft; // Target starts where we are
+                velocity = 0; // Reset velocity
 
-        const sectionObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    activateNavLink(entry.target.id);
+                // Cancel any previous animation frame to prevent conflicts
+                cancelAnimationFrame(animationFrameId);
+                // Start the animation loop
+                animationFrameId = requestAnimationFrame(animationLoop);
+
+                e.preventDefault(); // Prevent default drag/selection
+            };
+
+            const handleDrag = (e) => {
+                if (!isDown) return;
+                hasDragged = true; // Flag that movement occurred
+                e.preventDefault();
+
+                const x = e.pageX - slider.offsetLeft;
+                const walk = (x - startX) * dragMultiplier;
+                const newTarget = initialScrollLeft - walk;
+
+                // Update target position directly - the loop will smooth the transition
+                targetScrollLeft = newTarget;
+            };
+
+            const stopDrag = (e) => {
+                if (!isDown) return;
+                isDown = false;
+                slider.classList.remove('active-drag');
+                 // No need to cancel animation frame here, the loop will stop itself
+                 // when currentScrollLeft gets close to targetScrollLeft
+
+                // Prevent click if dragging occurred
+                if (hasDragged) {
+                     // Check if the click target was interactive; prevent if needed
+                     let target = e.target;
+                     while (target && target !== slider) {
+                         if (target.tagName === 'A' || target.tagName === 'BUTTON') {
+                             // console.log("Drag ended, might prevent click on:", target.tagName);
+                             // Let the capture listener handle prevention
+                             break;
+                         }
+                         target = target.parentNode;
+                     }
                 }
-            });
-        }, observerOptions);
+            };
 
-        sections.forEach(section => { sectionObserver.observe(section); });
+            const animationLoop = () => {
+                 // Calculate difference between target and current scroll
+                 const delta = targetScrollLeft - currentScrollLeft;
 
-         // Scroll Animations
-         const animatedElements = document.querySelectorAll('.animate-on-scroll');
-         const animationObserverOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
-         const animationObserver = new IntersectionObserver((entries, observer) => {
-             entries.forEach(entry => {
-                 if (entry.isIntersecting) {
-                     entry.target.classList.add('is-visible');
-                     observer.unobserve(entry.target);
+                 // If not dragging and the difference is negligible, stop the loop
+                 if (!isDown && Math.abs(delta) < stopThreshold) {
+                     // Ensure final position is exact
+                     slider.scrollLeft = targetScrollLeft;
+                     currentScrollLeft = targetScrollLeft;
+                     cancelAnimationFrame(animationFrameId);
+                     animationFrameId = null;
+                     // console.log("Animation stopped");
+                     return;
                  }
-             });
-         }, animationObserverOptions);
-         animatedElements.forEach(el => { animationObserver.observe(el); });
+
+                 // Apply easing (lerp towards the target)
+                 currentScrollLeft += delta * easingFactor;
+
+                 // Apply the smoothed scroll position
+                 slider.scrollLeft = Math.round(currentScrollLeft); // Use Math.round to avoid subpixel issues
+
+                 // Request the next frame
+                 animationFrameId = requestAnimationFrame(animationLoop);
+            };
+
+            // --- Event Listeners ---
+            slider.addEventListener('mousedown', startDrag);
+            slider.addEventListener('mousemove', handleDrag);
+            slider.addEventListener('mouseup', stopDrag);
+            slider.addEventListener('mouseleave', stopDrag); // Stop if mouse leaves container
+
+            // Optional: Prevent default browser drag behavior
+            slider.addEventListener('dragstart', (e) => e.preventDefault());
+
+            // Click prevention listener (Capture Phase) - same as before
+            slider.addEventListener('click', function(e) {
+               if (hasDragged) {
+                   let target = e.target;
+                   while (target && target !== this) {
+                       if (target.tagName === 'A' || target.tagName === 'BUTTON') {
+                           console.log("Drag detected, preventing click on:", target.tagName);
+                           e.preventDefault();
+                           e.stopPropagation();
+                           break;
+                       }
+                       target = target.parentNode;
+                   }
+               }
+            }, true); // Use capture phase
+
+        } else {
+            console.error("Project scroll container not found.");
+        }
+
 
     </script>
 
