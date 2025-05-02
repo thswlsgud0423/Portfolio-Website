@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sambang - Enhanced Gallery</title>
+    <style>
+        /* --- CSS --- */
+        /* (Keep the existing CSS rules exactly as they were in the original) */
+        :root {
+            --wenge: #54494b;
+            --mint-cream: #f1f7ed;
+            --cambridge-blue: #91c7b1;
+            --rose-red: #b33951;
+            --flax: #e3d081;
+            --card-highlight: rgba(255, 255, 255, 0.4);
+            --card-shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--mint-cream), #d7e9dc);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            overflow-x: hidden; /* Prevent horizontal scrollbar */
+            overflow-y: hidden; /* Often desirable for full-screen carousels */
+            perspective: 1000px;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(241, 247, 237, 0.8);
+            backdrop-filter: blur(8px);
+            padding: 1rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
+        h1 a {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            color: var(--cambridge-blue);
+            text-decoration: none;
+            font-size: 2.5rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 a:hover {
+            color: var(--rose-red);
+            transform: scale(1.05);
+        }
+
+        main {
+            padding-top: 100px; /* Reduced padding slightly */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; /* Center vertically */
+        }
+
+        .gallery-title {
+            margin: 0 0 1.5rem; /* Adjusted margin */
+            color: var(--wenge);
+            font-size: 2rem;
+            text-align: center;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+            transform-style: preserve-3d;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); } /* Reduced float */
+            100% { transform: translateY(0px); }
+        }
+
+        .card-container {
+            position: relative;
+            width: 90%;
+            /* Adjusted height slightly, ensure it fits viewport */
+            height: calc(100vh - 160px); /* Header + title margin */
+            max-height: 650px; /* Set a max height */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1500px;
+            margin: 0 auto;
+            transform-style: preserve-3d;
+        }
+
+        .card-carousel {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .photo_div {
+            position: absolute;
+            width: 280px; /* Slightly smaller cards */
+            height: 420px;
+            border-radius: 15px;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            /* Adjusted transition for smoother snapping */
+            transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1),
+                        opacity 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: grab;
+            box-shadow:
+                0 15px 30px rgba(0, 0, 0, 0.15),
+                0 5px 10px rgba(0, 0, 0, 0.1);
+            /* backface-visibility: hidden; */ /* Hides back of cards during rotation */
+        }
+
+
+        .photo_div:hover {
+            box-shadow:
+                0 25px 40px rgba(0, 0, 0, 0.2),
+                0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .photo_div.active {
+            cursor: grabbing;
+        }
+
+        .photo_div-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Keep remaining CSS rules the same */
+         .card-shine {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 15px;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0) 45%,
+                rgba(255, 255, 255, 0.4) 50%,
+                rgba(255, 255, 255, 0) 55%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            opacity: 0;
+            transition: opacity 0.6s, transform 1s;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .photo_div:hover .card-shine {
+            opacity: 1;
+            transform: translateX(100px);
+        }
+
+        .card-border {
+            position: absolute;
+            width: calc(100% + 4px);
+            height: calc(100% + 4px);
+            top: -2px;
+            left: -2px;
+            border-radius: 15px;
+            z-index: 1;
+            background: linear-gradient(
+                45deg,
+                var(--cambridge-blue),
+                var(--rose-red),
+                var(--flax),
+                var(--cambridge-blue)
+            );
+            background-size: 300% 300%;
+            animation: borderGradient 5s ease infinite;
+        }
+
+        @keyframes borderGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .photo_con {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+            z-index: 2;
+            transform-style: preserve-3d;
+        }
+
+        .p_photo {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 1rem;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            color: var(--mint-cream);
+            font-weight: bold;
+            text-align: center;
+            z-index: 4;
+            transform: translateZ(10px);
+            transform-style: preserve-3d;
+            font-size: 1.2rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            border-bottom-left-radius: 15px; /* Match card radius */
+            border-bottom-right-radius: 15px;
+        }
+
+        .arrow-icon {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--cambridge-blue);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            z-index: 100;
+            transform-style: preserve-3d;
+            transform: translateZ(20px);
+        }
+
+        .arrow-icon:hover {
+            background-color: var(--rose-red);
+            transform: translateY(-5px) translateZ(20px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .arrow {
+            width: 15px;
+            height: 15px;
+            border-left: 3px solid var(--mint-cream);
+            border-bottom: 3px solid var(--mint-cream);
+            transform: rotate(-45deg);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            perspective: 1000px;
+        }
+
+        .modal-content {
+            max-width: 80%;
+            max-height: 80%;
+            object-fit: contain;
+            transform: rotateY(0deg);
+            transition: transform 0.6s ease;
+            box-shadow: 0 0 50px rgba(145, 199, 177, 0.5);
+            border-radius: 10px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 2.5rem;
+            color: var(--mint-cream);
+            cursor: pointer;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            transform: rotate(90deg);
+            color: var(--rose-red);
+        }
+
+        /* Holographic effect */
+        .holographic {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            background: linear-gradient(125deg,
+                rgba(255, 255, 255, 0.1) 0%,
+                rgba(255, 255, 255, 0.3) 25%,
+                rgba(145, 199, 177, 0.4) 50%,
+                rgba(179, 57, 81, 0.3) 75%,
+                rgba(227, 208, 129, 0.2) 100%);
+            opacity: 0;
+            z-index: 3;
+            transition: opacity 0.3s ease, background-position 0.1s linear; /* Added background transition */
+            pointer-events: none;
+            background-size: 200% 200%; /* Needed for position animation */
+        }
+
+        .photo_div:hover .holographic {
+            opacity: 0.4;
+        }
+
+        /* Animation for page load */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .fadeInUp {
+            animation: fadeInUp 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        /* Custom cursor */
+        .grab-cursor {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="%2391c7b1" stroke="%23ffffff" stroke-width="1"/></svg>') 8 8, auto;
+        }
+        body.grabbing {
+             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z" fill="%23b33951"/><path fill-rule="evenodd" d="M8 1a7 7 0 1 1 0 14A7 7 0 0 1 8 1ZM5.5 8a2.5 2.5 0 1 0 5 0 2.5 2.5 0 0 0-5 0Z" clip-rule="evenodd" fill="%2391c7b1" stroke="%23ffffff" stroke-width="1"/></svg>') 8 8, grabbing !important;
+        }
+
+
+        /* Responsive design */
+        @media (max-width: 900px) {
+             .photo_div {
+                width: 240px;
+                height: 360px;
+            }
+        }
+        @media (max-width: 768px) {
+            h1 a {
+                font-size: 2rem;
+            }
+            .photo_div {
+                width: 200px;
+                height: 300px;
+            }
+            .p_photo {
+                font-size: 1rem;
+                padding: 1rem 0.8rem;
+            }
+            .card-container {
+                 max-height: 550px;
+            }
+            .arrow-icon {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+        @media (max-width: 480px) {
+             .photo_div {
+                width: 180px;
+                height: 270px;
+            }
+             .gallery-title {
+                 font-size: 1.5rem;
+                 margin-bottom: 1rem;
+             }
+             .card-container {
+                 max-height: 450px;
+             }
+        }
+
+    </style>
+</head>
+
+<body class="grab-cursor">
+    <header>
+        <h1>
+            <a href="index.html">Welcome to Sambang</a>
+        </h1>
+    </header>
+
+    <main class="fadeInUp">
+        <h2 class="gallery-title">3D Photo Gallery</h2>
+
+        <div class="card-container">
+            <div class="card-carousel" id="cardCarousel">
+                <div class="photo_div">
+                    <div class="card-border"></div>
+                    <div class="photo_div-inner">
+                        <img src="images/Air Fryer.jpg" class="photo_con" alt="Air Fryer">
+                        <div class="holographic"></div>
+                        <div class="card-shine"></div>
+                        <p class="p_photo">Air Fryer</p>
+                    </div>
+                </div>
+                <div class="photo_div">
+                    <div class="card-border"></div>
+                    <div class="photo_div-inner">
+                        <img src="images/Dolon.jpg" class="photo_con" alt="Dolon">
+                        <div class="holographic"></div>
+                        <div class="card-shine"></div>
+                        <p class="p_photo">Dolon</p>
+                    </div>
+                </div>
+                <div class="photo_div">
+                    <div class="card-border"></div>
+                    <div class="photo_div-inner">
+                        <img src="images/going mad.jpg" class="photo_con" alt="Going Mad">
+                        <div class="holographic"></div>
+                        <div class="card-shine"></div>
+                        <p class="p_photo">Going Mad</p>
+                    </div>
+                </div>
+                <div class="photo_div">
+                    <div class="card-border"></div>
+                    <div class="photo_div-inner">
+                        <img src="images/Jinbang.jpg" class="photo_con" alt="Jinbang">
+                        <div class="holographic"></div>
+                        <div class="card-shine"></div>
+                        <p class="p_photo">Jinbang</p>
+                    </div>
+                </div>
+                 <div class="photo_div">
+                    <div class="card-border"></div>
+                    <div class="photo_div-inner">
+                        <img src="images/Air Fryer.jpg" class="photo_con" alt="Air Fryer Repeat 1">
+                        <div class="holographic"></div>
+                        <div class="card-shine"></div>
+                        <p class="p_photo">Air Fryer 2</p>
+                    </div>
+                </div>
+                 <div class="photo_div">
+                    <div class="card-border"></div>
+                    <div class="photo_div-inner">
+                        <img src="images/Dolon.jpg" class="photo_con" alt="Dolon Repeat 1">
+                        <div class="holographic"></div>
+                        <div class="card-shine"></div>
+                        <p class="p_photo">Dolon 2</p>
+                    </div>
+                </div>
+                 <div class="photo_div">
+                    <div class="card-border"></div>
+                    <div class="photo_div-inner">
+                        <img src="images/going mad.jpg" class="photo_con" alt="Going Mad Repeat 1">
+                        <div class="holographic"></div>
+                        <div class="card-shine"></div>
+                        <p class="p_photo">Going Mad 2</p>
+                    </div>
+                </div>
+                 <div class="photo_div">
+                    <div class="card-border"></div>
+                    <div class="photo_div-inner">
+                        <img src="images/Jinbang.jpg" class="photo_con" alt="Jinbang Repeat 1">
+                        <div class="holographic"></div>
+                        <div class="card-shine"></div>
+                        <p class="p_photo">Jinbang 2</p>
+                    </div>
+                </div>
+                 <div class="photo_div">
+                    <div class="card-border"></div>
+                    <div class="photo_div-inner">
+                        <img src="images/Air Fryer.jpg" class="photo_con" alt="Air Fryer Repeat 2">
+                        <div class="holographic"></div>
+                        <div class="card-shine"></div>
+                        <p class="p_photo">Air Fryer 3</p>
+                    </div>
+                </div>
+                 <div class="photo_div">
+                    <div class="card-border"></div>
+                    <div class="photo_div-inner">
+                        <img src="images/Dolon.jpg" class="photo_con" alt="Dolon Repeat 2">
+                        <div class="holographic"></div>
+                        <div class="card-shine"></div>
+                        <p class="p_photo">Dolon 3</p>
+                    </div>
+                </div>
+                 <div class="photo_div">
+                    <div class="card-border"></div>
+                    <div class="photo_div-inner">
+                        <img src="images/going mad.jpg" class="photo_con" alt="Going Mad Repeat 2">
+                        <div class="holographic"></div>
+                        <div class="card-shine"></div>
+                        <p class="p_photo">Going Mad 3</p>
+                    </div>
+                </div>
+                 <div class="photo_div">
+                    <div class="card-border"></div>
+                    <div class="photo_div-inner">
+                        <img src="images/Jinbang.jpg" class="photo_con" alt="Jinbang Repeat 2">
+                        <div class="holographic"></div>
+                        <div class="card-shine"></div>
+                        <p class="p_photo">Jinbang 3</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="arrow-icon" id="aboutArrow">
+            <div class="arrow"></div>
+        </div>
+    </main>
+
+    <div class="modal" id="imageModal">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const carousel = document.getElementById('cardCarousel');
+            const aboutArrow = document.getElementById('aboutArrow');
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const closeModal = document.querySelector('.close-modal');
+            const cards = document.querySelectorAll('.photo_div');
+            const cardCount = cards.length;
+            const body = document.body;
+
+            // Carousel state
+            let isDragging = false;
+            let startX;
+            let currentX;
+            let carouselAngle = 0;
+            let targetAngle = 0; // Target angle for smooth rotation/snapping
+            let animationFrameId = null;
+            let wheelSnapTimeout;
+
+            // Dynamic setup based on card count
+            const radius = cardCount > 8 ? 700 : (cardCount > 5 ? 600 : 450); // Adjusted radius
+            const theta = (2 * Math.PI) / cardCount; // Angle between cards in radians
+            const anglePerCardDegrees = 360 / cardCount;
+
+            // --- Core Functions ---
+
+            // Position cards in a circle
+            function arrangeCards(rotationAngle) {
+                 cards.forEach((card, i) => {
+                    const cardAngleRad = theta * i + (rotationAngle * Math.PI / 180);
+                    const x = Math.sin(cardAngleRad) * radius;
+                    const z = Math.cos(cardAngleRad) * radius;
+                    const angleDeg = cardAngleRad * (180 / Math.PI);
+
+                    // Apply position and rotation
+                    // Note: We use instantaneous transform here, transition is handled by the animation loop or CSS for snapping
+                    card.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${angleDeg}deg)`;
+
+                    // Adjust opacity and scale based on depth (z-position)
+                    // Furthest point Z = -radius, Closest point Z = +radius
+                    const maxZ = radius;
+                    const minZ = -radius;
+                    const normalizedZ = (z - minZ) / (maxZ - minZ); // Range 0 (back) to 1 (front)
+
+                    // Adjust scale and opacity for depth perception
+                    const scale = 0.6 + 0.4 * normalizedZ; // Scale from 0.6 to 1.0
+                    const opacity = 0.4 + 0.6 * normalizedZ; // Opacity from 0.4 to 1.0
+
+                    card.style.opacity = opacity;
+                    // Apply scale within the main transform to avoid conflicts
+                    card.style.transform += ` scale(${scale})`;
+                    card.style.zIndex = Math.floor(normalizedZ * 100); // Front cards have higher z-index
+                });
+            }
+
+            // Smooth rotation animation loop
+            function animateRotation() {
+                if (Math.abs(targetAngle - carouselAngle) > 0.1) {
+                    // Apply easing (lerp - linear interpolation)
+                    carouselAngle += (targetAngle - carouselAngle) * 0.1;
+                    arrangeCards(carouselAngle);
+                    animationFrameId = requestAnimationFrame(animateRotation);
+                } else {
+                    // Snap to final target angle
+                    carouselAngle = targetAngle;
+                    arrangeCards(carouselAngle);
+                    animationFrameId = null; // Stop the loop
+                }
+            }
+
+            // Start the animation loop if not already running
+            function startAnimation() {
+                if (!animationFrameId) {
+                    animationFrameId = requestAnimationFrame(animateRotation);
+                }
+            }
+
+            // Calculate the target angle to snap the nearest card to the front
+            function snapToClosestCard() {
+                // Calculate the closest snap angle
+                const closestIndex = Math.round(-carouselAngle / anglePerCardDegrees);
+                targetAngle = -closestIndex * anglePerCardDegrees;
+
+                startAnimation(); // Start smooth animation towards the target
+            }
+
+            // Rotate carousel instantly (used during drag)
+             function rotateCarouselImmediate(deltaAngle) {
+                carouselAngle += deltaAngle;
+                targetAngle = carouselAngle; // Update target while dragging
+                 arrangeCards(carouselAngle); // Update positions directly
+            }
+
+            // --- Card Interaction (Tilt, Hologram, Modal) ---
+
+            function setupCardInteraction(card) {
+                let cardInner = card.querySelector('.photo_div-inner');
+                let holographic = card.querySelector('.holographic');
+                let cardRect;
+                let isPointerDownOnCard = false; // Track if pointer started on *this* card
+                let pointerStartX, pointerStartY; // Track starting point for click vs drag detection
+                const clickThreshold = 5; // Max pixels moved to be considered a click
+
+                card.addEventListener('mousedown', (e) => {
+                    // Only activate if not dragging the whole carousel
+                    if (!isDragging) {
+                        isPointerDownOnCard = true;
+                        pointerStartX = e.clientX;
+                        pointerStartY = e.clientY;
+                        card.classList.add('active'); // Visual cue
+                        // Don't prevent default here, allow carousel drag to potentially start
+                    }
+                });
+
+                 card.addEventListener('touchstart', (e) => {
+                    if (!isDragging) {
+                        isPointerDownOnCard = true;
+                        pointerStartX = e.touches[0].clientX;
+                        pointerStartY = e.touches[0].clientY;
+                        card.classList.add('active');
+                    }
+                 }, { passive: true });
+
+
+                card.addEventListener('mousemove', (e) => {
+                    // Apply tilt/hologram only if mouse is over card AND carousel isn't being dragged
+                    if (!isDragging && !isPointerDownOnCard) { // Update: only tilt when NOT pressed down
+                        cardRect = card.getBoundingClientRect();
+                        const x = e.clientX - cardRect.left;
+                        const y = e.clientY - cardRect.top;
+                        const percentX = x / cardRect.width;
+                        const percentY = y / cardRect.height;
+
+                        const maxTilt = 8; // Max tilt degrees
+                        const tiltX = (0.5 - percentY) * maxTilt;
+                        const tiltY = (percentX - 0.5) * maxTilt;
+
+                        cardInner.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+                        holographic.style.backgroundPosition = `${percentX * 150}% ${percentY * 150}%`; // Adjust multiplier for desired speed
+                        holographic.style.opacity = '0.4';
+                    }
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    if (!isDragging) {
+                        cardInner.style.transform = ''; // Reset tilt
+                        holographic.style.opacity = '0';
+                        card.classList.remove('active'); // Remove active state if mouse leaves
+                        isPointerDownOnCard = false; // Reset flag if mouse leaves while potentially pressed
+                    }
+                });
+
+
+                card.addEventListener('mouseup', (e) => {
+                    // Check if it was a click (minimal movement) vs a drag start
+                    if (isPointerDownOnCard) {
+                         const deltaX = Math.abs(e.clientX - pointerStartX);
+                         const deltaY = Math.abs(e.clientY - pointerStartY);
+
+                        if (deltaX < clickThreshold && deltaY < clickThreshold) {
+                             // It's a click! Open modal
+                            const img = card.querySelector('.photo_con');
+                            modal.style.display = 'flex';
+                            modalImg.src = img.src;
+                            body.style.overflow = 'hidden'; // Prevent background scroll
+
+                            // Optional: 3D effect for modal image appearance
+                            modalImg.style.transform = 'rotateY(10deg) scale(0.9)';
+                            setTimeout(() => {
+                                modalImg.style.transform = 'rotateY(0deg) scale(1)';
+                            }, 50); // Short delay for transition
+                         }
+                         // Reset card state regardless
+                        card.classList.remove('active');
+                        isPointerDownOnCard = false;
+                    }
+                 });
+
+                 card.addEventListener('touchend', (e) => {
+                    if (isPointerDownOnCard) {
+                        // Use changedTouches to get final position
+                         const touch = e.changedTouches[0];
+                         const deltaX = Math.abs(touch.clientX - pointerStartX);
+                         const deltaY = Math.abs(touch.clientY - pointerStartY);
+
+                         if (deltaX < clickThreshold && deltaY < clickThreshold) {
+                             // It's a tap! Open modal
+                             const img = card.querySelector('.photo_con');
+                             modal.style.display = 'flex';
+                             modalImg.src = img.src;
+                             body.style.overflow = 'hidden';
+
+                             modalImg.style.transform = 'rotateY(10deg) scale(0.9)';
+                             setTimeout(() => {
+                                 modalImg.style.transform = 'rotateY(0deg) scale(1)';
+                             }, 50);
+                         }
+                         card.classList.remove('active');
+                         isPointerDownOnCard = false;
+                     }
+                 });
+            }
+
+            // --- Global Event Listeners (Carousel Drag, Wheel, Keys, Modal) ---
+
+            function initCarouselControls() {
+                // --- Mouse Drag ---
+                carousel.addEventListener('mousedown', (e) => {
+                    isDragging = true;
+                    startX = e.clientX;
+                    currentX = startX;
+                    body.classList.add('grabbing');
+                    if (animationFrameId) cancelAnimationFrame(animationFrameId); // Stop snap animation if dragging starts
+                    e.preventDefault(); // Prevent text selection, etc.
+                });
+
+                document.addEventListener('mousemove', (e) => {
+                    if (!isDragging) return;
+                    const deltaX = e.clientX - currentX;
+                    rotateCarouselImmediate(deltaX * 0.2); // Adjust sensitivity
+                    currentX = e.clientX;
+                });
+
+                document.addEventListener('mouseup', () => {
+                    if (isDragging) {
+                        isDragging = false;
+                        body.classList.remove('grabbing');
+                        snapToClosestCard(); // Snap on mouse up
+                    }
+                });
+
+                 // --- Touch Drag ---
+                 carousel.addEventListener('touchstart', (e) => {
+                     isDragging = true;
+                     startX = e.touches[0].clientX;
+                     currentX = startX;
+                     body.classList.add('grabbing');
+                     if (animationFrameId) cancelAnimationFrame(animationFrameId);
+                     // Don't preventDefault immediately, allow card touchstart
+                 }, { passive: false }); // Need false to potentially prevent scroll later
+
+                 document.addEventListener('touchmove', (e) => {
+                     if (!isDragging) return;
+                     // Prevent page scroll while dragging carousel horizontally
+                     e.preventDefault();
+                     const deltaX = e.touches[0].clientX - currentX;
+                     rotateCarouselImmediate(deltaX * 0.25); // Touch might need different sensitivity
+                     currentX = e.touches[0].clientX;
+                 }, { passive: false }); // Needs false to preventDefault
+
+                 document.addEventListener('touchend', () => {
+                     if (isDragging) {
+                         isDragging = false;
+                         body.classList.remove('grabbing');
+                         snapToClosestCard(); // Snap on touch end
+                     }
+                 });
+
+
+                // --- Scroll Wheel ---
+                carousel.addEventListener('wheel', (e) => {
+                     e.preventDefault(); // Prevent page scroll
+                     if (animationFrameId) cancelAnimationFrame(animationFrameId); // Stop snap animation
+
+                     // Rotate based on vertical scroll primarily
+                     const rotationAmount = e.deltaY * 0.15; // Adjust sensitivity
+                     rotateCarouselImmediate(rotationAmount);
+
+                     // Debounce the snap-to-card after scrolling stops
+                     clearTimeout(wheelSnapTimeout);
+                     wheelSnapTimeout = setTimeout(() => {
+                         snapToClosestCard();
+                     }, 150); // Snap after 150ms of wheel inactivity
+
+                 }, { passive: false }); // Needs false to preventDefault
+
+
+                // --- Keyboard Navigation ---
+                document.addEventListener('keydown', (e) => {
+                    if (modal.style.display === 'flex') { // Only handle Esc for modal when open
+                         if (e.key === 'Escape') {
+                             closeModalHandler();
+                         }
+                        return; // Don't rotate carousel when modal is open
+                    }
+
+                    let rotationAmount = 0;
+                    if (e.key === 'ArrowLeft') {
+                        rotationAmount = anglePerCardDegrees; // Rotate by one card width
+                    } else if (e.key === 'ArrowRight') {
+                        rotationAmount = -anglePerCardDegrees;
+                    }
+
+                    if (rotationAmount !== 0) {
+                         if (animationFrameId) cancelAnimationFrame(animationFrameId);
+                         // Set target angle directly for snapping effect with keys
+                         targetAngle = Math.round((carouselAngle + rotationAmount) / anglePerCardDegrees) * anglePerCardDegrees;
+                         startAnimation();
+                    }
+                });
+
+                // --- Modal ---
+                closeModal.addEventListener('click', closeModalHandler);
+                modal.addEventListener('click', (event) => {
+                    if (event.target === modal) { // Click outside the image
+                        closeModalHandler();
+                    }
+                });
+
+                function closeModalHandler() {
+                     modal.style.display = 'none';
+                     modalImg.src = ''; // Clear src
+                     body.style.overflow = ''; // Restore background scroll
+                }
+
+                 // --- About Arrow ---
+                 aboutArrow.addEventListener('click', () => {
+                     window.location.href = 'about.html'; // Or desired link
+                 });
+            }
+
+            // --- Initialization ---
+            arrangeCards(carouselAngle); // Initial positioning
+            cards.forEach(setupCardInteraction); // Setup interactions for each card
+            initCarouselControls(); // Setup global controls
+
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+/* CSS HEX */
+:root{
+    --wenge: #54494bff;
+    --mint-cream: #f1f7edff;
+    --cambridge-blue: #91c7b1ff;
+    --rose-red: #b33951ff;
+    --flax: #e3d081ff;
+    }
+    
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: mintcream;
+        padding: 10px;
+        /* box-shadow: 0 2px 5px var(--cambridge-blue); */
+    }
+    
+    h1 {
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        color: var(--cambridge-blue);
+    }
+    
+    body {
+        font-family: Arial, sans-serif;
+        background-color: mintcream;
+        /* display: flex; */
+        justify-content: left;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    h2 {
+        margin: 0;
+        font-size: 1.5em;
+    }
+    
+    p {
+        margin: 10px 0 0;
+        color: var(--wenge);
+    }
+
+    footer {
+        clear: both;
+        position: relative;
+        height: 200px;
+        margin-top: -200px;
+    }
+    
+    /* Styling for the logo and about link */
+    .logo {
+        text-decoration: none;  /* Removes underline */
+        color: var(--cambridge-blue);           /* Text color */
+        font-size: 36px;        /* Same size for both */
+        font-weight: bold;
+        padding-left: 20px;
+    }
+    
+    .about-link {
+        text-decoration: none;  /* Removes underline */
+        color: var(--cambridge-blue);           /* Text color */
+        font-size: 36px;        /* Same size for both */
+        font-weight: bold;
+        /* margin-left: auto; */
+        position: absolute;
+        right: 10px;
+        padding-right: 20px;
+    }
+    
+    .con_about_title {
+        font-size: 30px;
+        text-align: center;
+        margin: auto;
+        width: 50%;
+        /* border: 3px solid var(--rose-red); */
+        padding: 10px;
+    }
+
+    .info_card {
+        display: flex;
+        align-items: center;
+        background: var(--cambridge-blue);
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        width: 80%;
+        padding-right: 20px;
+        margin-bottom: 60px;
+    }
+
+    .info_card img {
+        padding-right: 20px;
+        width: 33.33%;
+        height: auto;
+        object-fit: cover;
+    }
+
+    .about_text {
+        /* color: mintcream; */
+        font-size: 20px;
+        padding: 20px 30px;
+        flex: 1;
+        text-align: left;
+        /* background-color: mintcream; */
+        color: var(--wenge)
+    }
+
+    .con_about{
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        width: 70%;
+        margin: 0 auto;
+        /* max-width: 300px; */
+    }

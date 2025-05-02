@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Programmer Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Add subtle transition for smooth hover effects */
+        a, button {
+            transition: all 0.3s ease;
+        }
+        /* Style for active nav link */
+        .nav-active {
+            font-weight: 600;
+            color: #3b82f6; /* Blue-500 */
+        }
+        /* Simple fade-in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Add intersection observer trigger class */
+        .animate-on-scroll {
+             opacity: 0;
+             transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+             transform: translateY(20px);
+        }
+        .animate-on-scroll.is-visible {
+             opacity: 1;
+             transform: translateY(0);
+        }
+         /* Add animation delay helper classes */
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-500 { animation-delay: 0.5s; }
+
+        /* Style for tech stack badges in project cards */
+        .tech-badge {
+            background-color: #e0e7ff; /* indigo-100 */
+            color: #4338ca; /* indigo-700 */
+            padding: 0.25rem 0.75rem; /* px-3 py-1 */
+            border-radius: 9999px; /* rounded-full */
+            font-size: 0.75rem; /* text-xs */
+            font-weight: 500; /* font-medium */
+            white-space: nowrap;
+        }
+
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased">
+
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#home" class="text-2xl font-bold text-gray-900 hover:text-blue-600">Your Name</a>
+
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="#home" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium nav-active" aria-label="Scroll to Home section">Home</a>
+                <a href="#about" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium" aria-label="Scroll to About section">About</a>
+                <a href="#projects" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium" aria-label="Scroll to Projects section">Projects</a>
+                <a href="#contact" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium" aria-label="Scroll to Contact section">Contact</a>
+                <a href="#contact" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-medium shadow hover:shadow-md" aria-label="Scroll to Contact section">Hire Me</a>
+            </div>
+
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-600 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" aria-label="Open main menu">
+                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
+            </div>
+        </nav>
+
+        <div id="mobile-menu" class="md:hidden hidden bg-white shadow-lg absolute top-full left-0 w-full">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="block text-gray-600 hover:bg-gray-100 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium nav-active" aria-label="Scroll to Home section">Home</a>
+                <a href="#about" class="block text-gray-600 hover:bg-gray-100 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium" aria-label="Scroll to About section">About</a>
+                <a href="#projects" class="block text-gray-600 hover:bg-gray-100 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium" aria-label="Scroll to Projects section">Projects</a>
+                <a href="#contact" class="block text-gray-600 hover:bg-gray-100 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium" aria-label="Scroll to Contact section">Contact</a>
+                <a href="#contact" class="block bg-blue-500 hover:bg-blue-600 text-white text-center mt-2 mx-3 px-4 py-2 rounded-full text-base font-medium shadow hover:shadow-md" aria-label="Scroll to Contact section">Hire Me</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <section id="home" class="container mx-auto px-6 py-20 md:py-32 flex flex-col md:flex-row items-center animate-on-scroll">
+            <div class="md:w-1/2 lg:w-3/5 text-center md:text-left mb-12 md:mb-0">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 leading-tight animate-on-scroll delay-100">
+                    Hi, I'm <span class="text-blue-600">Your Name</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-700 mb-6 animate-on-scroll delay-200">
+                    Software Engineer | Full-Stack Developer based in [Your Location].
+                </p>
+                <p class="text-lg text-gray-600 mb-8 max-w-xl mx-auto md:mx-0 animate-on-scroll delay-300">
+                    I build robust and scalable web applications, focusing on clean code and efficient solutions. Let's turn your ideas into code.
+                </p>
+                <div class="flex justify-center md:justify-start space-x-4 animate-on-scroll delay-400">
+                    <a href="#projects" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-full font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-1">
+                        See My Projects
+                    </a>
+                    <a href="#contact" class="bg-white hover:bg-gray-100 text-gray-700 px-6 py-3 rounded-full font-semibold shadow-md hover:shadow-lg border border-gray-300 transform hover:-translate-y-1">
+                        Get In Touch
+                    </a>
+                </div>
+                 <div class="mt-10 flex justify-center md:justify-start space-x-6 animate-on-scroll delay-500">
+                     <a href="#" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-blue-600" aria-label="GitHub Profile">
+                         <i class="fab fa-github fa-2x"></i>
+                     </a>
+                     <a href="#" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-blue-600" aria-label="LinkedIn Profile">
+                         <i class="fab fa-linkedin fa-2x"></i>
+                     </a>
+                     <a href="#" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-blue-600" aria-label="Twitter Profile (Optional)">
+                         <i class="fab fa-twitter fa-2x"></i>
+                     </a>
+                     </div>
+            </div>
+            <div class="md:w-1/2 lg:w-2/5 flex justify-center md:justify-end animate-on-scroll delay-200">
+                <img src="https://placehold.co/400x400/E2E8F0/A0AEC0?text=Your+Image" alt="Your Name - Profile Picture" class="rounded-full w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 object-cover shadow-lg border-4 border-white">
+            </div>
+        </section>
+
+        <section id="about" class="bg-white py-20 md:py-28">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12 animate-on-scroll">About Me</h2>
+                <div class="flex flex-col md:flex-row items-start gap-12 lg:gap-16"> <div class="md:w-1/3 lg:w-1/4 flex justify-center animate-on-scroll delay-100">
+                         <img src="https://placehold.co/300x400/E2E8F0/A0AEC0?text=About+Me" alt="About Me Image" class="rounded-lg shadow-xl w-full max-w-xs object-cover">
+                    </div>
+                    <div class="md:w-2/3 lg:w-3/4 text-center md:text-left animate-on-scroll delay-200">
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Who I Am</h3>
+                        <p class="text-gray-600 leading-relaxed mb-6">
+                            Hello! I'm [Your Name], a passionate Software Engineer specializing in [Your Main Area, e.g., full-stack development, backend systems, frontend interfaces]. I enjoy tackling challenging problems and building applications that are both functional and user-friendly. My journey into programming began [Number] years ago, driven by a curiosity for how things work and a desire to create.
+                        </p>
+                        <p class="text-gray-600 leading-relaxed mb-8">
+                            I have experience working with [Mention specific technologies/frameworks like React, Node.js, Python, Django, etc.] and follow best practices like [Mention methodologies like Agile, TDD, etc.]. I'm always eager to learn new technologies and improve my craft. When I'm not coding, I enjoy [Your Hobbies/Interests].
+                        </p>
+                        <h4 class="text-xl font-semibold text-gray-800 mb-4">Technical Skills</h4>
+                        <div class="flex flex-wrap justify-center md:justify-start gap-3">
+                            <span class="bg-yellow-100 text-yellow-800 px-4 py-1 rounded-full text-sm font-medium">JavaScript (ES6+)</span>
+                            <span class="bg-blue-100 text-blue-800 px-4 py-1 rounded-full text-sm font-medium">React</span>
+                            <span class="bg-green-100 text-green-800 px-4 py-1 rounded-full text-sm font-medium">Node.js</span>
+                            <span class="bg-gray-200 text-gray-800 px-4 py-1 rounded-full text-sm font-medium">Express</span>
+                            <span class="bg-red-100 text-red-800 px-4 py-1 rounded-full text-sm font-medium">HTML5</span>
+                            <span class="bg-purple-100 text-purple-800 px-4 py-1 rounded-full text-sm font-medium">CSS3 / Sass</span>
+                            <span class="bg-indigo-100 text-indigo-800 px-4 py-1 rounded-full text-sm font-medium">Tailwind CSS</span>
+                            <span class="bg-pink-100 text-pink-800 px-4 py-1 rounded-full text-sm font-medium">Python</span>
+                            <span class="bg-teal-100 text-teal-800 px-4 py-1 rounded-full text-sm font-medium">SQL / PostgreSQL</span>
+                            <span class="bg-orange-100 text-orange-800 px-4 py-1 rounded-full text-sm font-medium">Git / GitHub</span>
+                            <span class="bg-cyan-100 text-cyan-800 px-4 py-1 rounded-full text-sm font-medium">Docker</span>
+                            <span class="bg-lime-100 text-lime-800 px-4 py-1 rounded-full text-sm font-medium">REST APIs</span>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="bg-gray-100 py-20 md:py-28">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16 animate-on-scroll">Featured Projects</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col transform hover:scale-[1.03] transition duration-300 animate-on-scroll delay-100">
+                        <img src="https://placehold.co/600x400/3B82F6/FFFFFF?text=Project+App+1" alt="Project 1 Screenshot" class="w-full h-48 object-cover">
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">E-commerce Platform</h3>
+                            <p class="text-gray-600 text-sm mb-4 flex-grow">
+                                Developed a full-stack e-commerce application featuring product browsing, user authentication, shopping cart functionality, and order processing using Stripe integration.
+                            </p>
+                            <div class="mb-4 flex flex-wrap gap-2">
+                                <span class="tech-badge">React</span>
+                                <span class="tech-badge">Node.js</span>
+                                <span class="tech-badge">Express</span>
+                                <span class="tech-badge">MongoDB</span>
+                                <span class="tech-badge">Stripe API</span>
+                            </div>
+                            <div class="mt-auto flex justify-between items-center pt-4 border-t border-gray-200">
+                                <a href="#" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:text-blue-700 hover:underline font-medium text-sm inline-flex items-center">
+                                    View Live
+                                    <i class="fas fa-external-link-alt ml-1 text-xs"></i>
+                                </a>
+                                <a href="#" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-gray-800" aria-label="View Project 1 Code on GitHub">
+                                    <i class="fab fa-github fa-lg"></i> Code
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col transform hover:scale-[1.03] transition duration-300 animate-on-scroll delay-200">
+                        <img src="https://placehold.co/600x400/10B981/FFFFFF?text=Project+Tool+2" alt="Project 2 Screenshot" class="w-full h-48 object-cover">
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Data Visualization Dashboard</h3>
+                            <p class="text-gray-600 text-sm mb-4 flex-grow">
+                                Created an interactive dashboard to visualize complex datasets using Chart.js. Implemented data fetching from a REST API and provided filtering options.
+                            </p>
+                             <div class="mb-4 flex flex-wrap gap-2">
+                                <span class="tech-badge">Vue.js</span>
+                                <span class="tech-badge">Chart.js</span>
+                                <span class="tech-badge">Tailwind CSS</span>
+                                <span class="tech-badge">REST API</span>
+                                <span class="tech-badge">Axios</span>
+                            </div>
+                             <div class="mt-auto flex justify-between items-center pt-4 border-t border-gray-200">
+                                <a href="#" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:text-blue-700 hover:underline font-medium text-sm inline-flex items-center">
+                                    View Live
+                                    <i class="fas fa-external-link-alt ml-1 text-xs"></i>
+                                </a>
+                                <a href="#" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-gray-800" aria-label="View Project 2 Code on GitHub">
+                                    <i class="fab fa-github fa-lg"></i> Code
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col transform hover:scale-[1.03] transition duration-300 animate-on-scroll delay-300">
+                        <img src="https://placehold.co/600x400/F59E0B/FFFFFF?text=Project+API+3" alt="Project 3 Screenshot" class="w-full h-48 object-cover">
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Task Management API</h3>
+                            <p class="text-gray-600 text-sm mb-4 flex-grow">
+                                Built a RESTful API for a task management application using Python and Flask. Implemented CRUD operations, user authentication with JWT, and database interactions.
+                            </p>
+                             <div class="mb-4 flex flex-wrap gap-2">
+                                <span class="tech-badge">Python</span>
+                                <span class="tech-badge">Flask</span>
+                                <span class="tech-badge">SQLAlchemy</span>
+                                <span class="tech-badge">PostgreSQL</span>
+                                <span class="tech-badge">JWT</span>
+                            </div>
+                             <div class="mt-auto flex justify-between items-center pt-4 border-t border-gray-200">
+                                <span class="text-gray-400 text-sm italic">API Only</span> <a href="#" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-gray-800" aria-label="View Project 3 Code on GitHub">
+                                    <i class="fab fa-github fa-lg"></i> Code
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    </div>
+            </div>
+        </section>
+
+        <section id="contact" class="bg-white py-20 md:py-28">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12 animate-on-scroll">Get In Touch</h2>
+                <p class="text-center text-gray-600 mb-10 max-w-2xl mx-auto animate-on-scroll delay-100">
+                    Interested in collaborating or have a question? I'd love to hear from you. Send me a message, and I'll get back to you as soon as possible!
+                </p>
+
+                <div class="bg-gray-50 p-8 md:p-12 rounded-lg shadow-lg animate-on-scroll delay-200">
+                    <form action="#" method="POST"> <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                                <input type="text" name="name" id="name" required class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                <input type="email" name="email" id="email" required class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+                            <input type="text" name="subject" id="subject" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div class="mb-6">
+                            <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                            <textarea name="message" id="message" rows="5" required class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-full font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-1 transition duration-300">
+                                Send Message
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-gray-400 py-8">
+        <div class="container mx-auto px-6 text-center">
+            <div class="mb-4 flex justify-center space-x-6">
+                 <a href="#" target="_blank" rel="noopener noreferrer" class="hover:text-white" aria-label="GitHub Profile">
+                     <i class="fab fa-github fa-lg"></i>
+                 </a>
+                 <a href="#" target="_blank" rel="noopener noreferrer" class="hover:text-white" aria-label="LinkedIn Profile">
+                     <i class="fab fa-linkedin fa-lg"></i>
+                 </a>
+                 <a href="#" target="_blank" rel="noopener noreferrer" class="hover:text-white" aria-label="Twitter Profile (Optional)">
+                     <i class="fab fa-twitter fa-lg"></i>
+                 </a>
+             </div>
+            <p class="text-sm">&copy; <span id="current-year"></span> Your Name. All rights reserved.</p>
+            <p class="text-xs mt-1">Built with <span class="text-red-500">&hearts;</span> and Tailwind CSS</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = mobileMenu.querySelectorAll('a');
+
+        menuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+             const icon = menuButton.querySelector('svg path');
+             if (mobileMenu.classList.contains('hidden')) {
+                 icon.setAttribute('d', 'M4 6h16M4 12h16m-7 6h7');
+                 menuButton.setAttribute('aria-expanded', 'false');
+             } else {
+                 icon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+                 menuButton.setAttribute('aria-expanded', 'true');
+             }
+        });
+
+         navLinks.forEach(link => {
+             link.addEventListener('click', () => {
+                 if (!mobileMenu.classList.contains('hidden')) {
+                     mobileMenu.classList.add('hidden');
+                     menuButton.querySelector('svg path').setAttribute('d', 'M4 6h16M4 12h16m-7 6h7');
+                     menuButton.setAttribute('aria-expanded', 'false');
+                 }
+             });
+         });
+
+        // Set Current Year in Footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Active Navigation Link Highlighting on Scroll
+        const sections = document.querySelectorAll('section[id]');
+        const desktopNavLinks = document.querySelectorAll('header nav .hidden a[href^="#"]');
+        const mobileNavLinks = document.querySelectorAll('#mobile-menu a[href^="#"]');
+
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.4 };
+
+        const activateNavLink = (id) => {
+            const setActive = (links) => {
+                 links.forEach(link => {
+                    link.classList.remove('nav-active');
+                    if (link.getAttribute('href') === `#${id}`) {
+                        link.classList.add('nav-active');
+                    }
+                });
+            }
+            setActive(desktopNavLinks);
+            setActive(mobileNavLinks);
+        };
+
+        const sectionObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    activateNavLink(entry.target.id);
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => { sectionObserver.observe(section); });
+
+         // Scroll Animations
+         const animatedElements = document.querySelectorAll('.animate-on-scroll');
+         const animationObserverOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+         const animationObserver = new IntersectionObserver((entries, observer) => {
+             entries.forEach(entry => {
+                 if (entry.isIntersecting) {
+                     entry.target.classList.add('is-visible');
+                     observer.unobserve(entry.target);
+                 }
+             });
+         }, animationObserverOptions);
+         animatedElements.forEach(el => { animationObserver.observe(el); });
+
+    </script>
+
+</body>
+</html>
